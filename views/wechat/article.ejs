@@ -3,7 +3,7 @@
 <head lang="en">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>小区公告</title>
+  <title>趣文</title>
   <link rel="stylesheet" href="/stylesheets/ser.css">
   <script type="text/javascript" src="/javascripts/jquery-2.1.1.min.js"></script>
 </head>
@@ -17,7 +17,7 @@
     var currentPage = 0;
 
     function getContent(pagenum){
-        $.get('/wechat/announcement',{page:pagenum},function(rows){
+        $.get('/wechat/article',{page:pagenum},function(rows){
             if(rows.length == 0)
                 return;
             for(var i = 0; i < rows.length;i++){
@@ -38,12 +38,12 @@
                     '</tr>'+
                     '</table>'+
                     '<div  class="message3">'+
-                    '       <div onclick="window.location.href=\'/wechat/announcementDetail?id=' + rows[i].id +
+                    '       <div onclick="window.location.href=\'/wechat/articleDetail?id=' + rows[i].id +
                                     '\'" style="float: left;width: 65%">'+
                     '       <div class="title2">' +
                                    rows[i].title +'</div>'+
                     '<div class="content2">' +
-                      rows[i].detail.replace(/<[^>]+>/g,"").substring(0,70) +'</div>'+
+                      rows[i].abstract +'</div>'+
                     '</div>'+
                     '<img src="'+rows[i].cover+'">'+
                     '<div class="clear"></div>'+
@@ -59,12 +59,12 @@
                                     '</tr>'+
                                     '</table>'+
                                     '<div class="message3">'+
-                                    '       <div onclick="window.location.href=\'/wechat/announcementDetail?id=' + rows[i].id +
+                                    '       <div onclick="window.location.href=\'/wechat/articleDetail?id=' + rows[i].id +
                                             '\'" style="float: left;width: 65%">'+
                                     '       <div class="title2">' +
                                     rows[i].title +'</div>'+
                                     '<div class="content2">' +
-                                      rows[i].detail.replace(/<[^>]+>/g,"").substring(0,70) +'</div>'+
+                                      rows[i].abstract +'</div>'+
                                     '</div>'+
                                     '<img src="'+ rows[i].cover +'">'+
                                     '<div class="clear"></div>'+

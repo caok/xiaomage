@@ -282,7 +282,7 @@ module.exports = function(app){
           if(rows.length !== 1){
             return;
           }
-          rows[0].time = rows[0].time.Format('yyyy年M月d日 hh:mm');
+          rows[0].time = rows[0].time.Format('yyyy-M-d');
           res.render('wechat/articleDetail',{obj:rows[0]});
         })
     })
@@ -453,6 +453,219 @@ module.exports = function(app){
     });
   });
 
+  // 捣江湖
+  app.get('/admin/dao', function(req, res){
+    console.log("dao index");
+    db.select('id, title, time, abstract')
+      .get('dao',function(err, dao, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(dao);
+      }
+    })
+  });
+  app.get('/admin/dao/:id', function(req, res){
+    console.log("dao show");
+    db.where({id: req.params.id}).get('dao',function(err, dao, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(dao[0]);
+      }
+    })
+  });
+  app.post('/admin/dao', function(req, res){
+    console.log("dao create");
+    console.log(req.body.detail);
+    var dao = {
+      title:req.body.title,
+      cover:req.body.cover,
+      abstract: req.body.abstract,
+      detail:req.body.detail,
+      time:getDateTime(new Date())
+    }
+    db.insert('dao', dao, function(err, dao){
+      if (err){
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      };
+    });
+  });
+  app.post('/admin/dao/:id', function(req, res){
+    console.log("dao update");
+    console.log(req.body.detail);
+    var dao = {
+      title:req.body.title,
+      cover:req.body.cover,
+      detail:req.body.detail,
+      abstract: req.body.abstract
+    }
+    db.where({id: req.params.id}).update('dao', dao, function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+  app.delete('/admin/dao/:id', function(req, res){
+    console.log("dao delete");
+    db.where({id: req.params.id}).delete('dao', function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+
+  // 毫稍来看
+  app.get('/admin/hao', function(req, res){
+    console.log("hao index");
+    db.select('id, title, time, abstract')
+      .get('hao',function(err, hao, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(hao);
+      }
+    })
+  });
+  app.get('/admin/hao/:id', function(req, res){
+    console.log("hao show");
+    db.where({id: req.params.id}).get('hao',function(err, hao, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(hao[0]);
+      }
+    })
+  });
+  app.post('/admin/hao', function(req, res){
+    console.log("hao create");
+    console.log(req.body.detail);
+    var hao = {
+      title:req.body.title,
+      cover:req.body.cover,
+      abstract: req.body.abstract,
+      detail:req.body.detail,
+      time:getDateTime(new Date())
+    }
+    db.insert('hao', hao, function(err, hao){
+      if (err){
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      };
+    });
+  });
+  app.post('/admin/hao/:id', function(req, res){
+    console.log("hao update");
+    console.log(req.body.detail);
+    var hao = {
+      title:req.body.title,
+      cover:req.body.cover,
+      detail:req.body.detail,
+      abstract: req.body.abstract
+    }
+    db.where({id: req.params.id}).update('hao', hao, function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+  app.delete('/admin/hao/:id', function(req, res){
+    console.log("hao delete");
+    db.where({id: req.params.id}).delete('hao', function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+
+  // DayDay Up
+  app.get('/admin/day', function(req, res){
+    console.log("day index");
+    db.select('id, title, time, abstract')
+      .get('day',function(err, day, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(day);
+      }
+    })
+  });
+  app.get('/admin/day/:id', function(req, res){
+    console.log("day show");
+    db.where({id: req.params.id}).get('day',function(err, day, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(day[0]);
+      }
+    })
+  });
+  app.post('/admin/day', function(req, res){
+    console.log("day create");
+    console.log(req.body.detail);
+    var day = {
+      title:req.body.title,
+      cover:req.body.cover,
+      abstract: req.body.abstract,
+      detail:req.body.detail,
+      time:getDateTime(new Date())
+    }
+    db.insert('day', day, function(err, day){
+      if (err){
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      };
+    });
+  });
+  app.post('/admin/day/:id', function(req, res){
+    console.log("day update");
+    console.log(req.body.detail);
+    var day = {
+      title:req.body.title,
+      cover:req.body.cover,
+      detail:req.body.detail,
+      abstract: req.body.abstract
+    }
+    db.where({id: req.params.id}).update('day', day, function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+  app.delete('/admin/day/:id', function(req, res){
+    console.log("day delete");
+    db.where({id: req.params.id}).delete('day', function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+
   // 小区活动
   app.get('/admin/activities', function(req, res){
     console.log("activitys index");
@@ -521,6 +734,150 @@ module.exports = function(app){
       }
     });
   });
+
+  // 招兵买马
+  app.get('/admin/zhao', function(req, res){
+    console.log("zhao index");
+    db.select('id, title, time, abstract')
+      .get('zhao',function(err, zhao, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(zhao);
+      }
+    })
+  });
+  app.get('/admin/zhao/:id', function(req, res){
+    console.log("zhao show");
+    db.where({id: req.params.id}).get('zhao',function(err, zhao, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(zhao[0]);
+      }
+    })
+  });
+  app.post('/admin/zhao', function(req, res){
+    console.log("zhao create");
+    console.log(req.body.detail);
+    var zhao = {
+      title:req.body.title,
+      cover:req.body.cover,
+      abstract: req.body.abstract,
+      detail:req.body.detail,
+      time:getDateTime(new Date())
+    }
+    db.insert('zhao', zhao, function(err, zhao){
+      if (err){
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      };
+    });
+  });
+  app.post('/admin/zhao/:id', function(req, res){
+    console.log("zhao update");
+    console.log(req.body.detail);
+    var zhao = {
+      title:req.body.title,
+      cover:req.body.cover,
+      detail:req.body.detail,
+      abstract: req.body.abstract
+    }
+    db.where({id: req.params.id}).update('zhao', zhao, function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+  app.delete('/admin/zhao/:id', function(req, res){
+    console.log("zhao delete");
+    db.where({id: req.params.id}).delete('zhao', function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+
+  // 求之若渴
+  app.get('/admin/qiu', function(req, res){
+    console.log("qiu index");
+    db.select('id, title, time, abstract')
+      .get('qiu',function(err, qiu, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(qiu);
+      }
+    })
+  });
+  app.get('/admin/qiu/:id', function(req, res){
+    console.log("qiu show");
+    db.where({id: req.params.id}).get('qiu',function(err, qiu, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(qiu[0]);
+      }
+    })
+  });
+  app.post('/admin/qiu', function(req, res){
+    console.log("qiu create");
+    console.log(req.body.detail);
+    var qiu = {
+      title:req.body.title,
+      cover:req.body.cover,
+      abstract: req.body.abstract,
+      detail:req.body.detail,
+      time:getDateTime(new Date())
+    }
+    db.insert('qiu', qiu, function(err, qiu){
+      if (err){
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      };
+    });
+  });
+  app.post('/admin/qiu/:id', function(req, res){
+    console.log("qiu update");
+    console.log(req.body.detail);
+    var qiu = {
+      title:req.body.title,
+      cover:req.body.cover,
+      detail:req.body.detail,
+      abstract: req.body.abstract
+    }
+    db.where({id: req.params.id}).update('qiu', qiu, function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+  app.delete('/admin/qiu/:id', function(req, res){
+    console.log("qiu delete");
+    db.where({id: req.params.id}).delete('qiu', function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+
+
   // 用户
   app.get('/admin/users', function(req, res){
     console.log("users index");
@@ -565,86 +922,6 @@ module.exports = function(app){
         res.send({result: 'success'});
       }
     });
-  });
-  // 上门维修
-  app.get('/admin/maintains', function(req, res){
-    console.log("maintains index");
-    db.select('maintenance.id AS id, maintenance.status AS status, user.name AS username, title, time')
-      .join('user', 'user.openid = maintenance.openid')
-      .get('maintenance',function(err, maintains, fields){
-      if(err){
-        console.log(err);
-      }else{
-        res.send(maintains);
-      }
-    })
-  });
-  app.get('/admin/maintains/:id', function(req, res){
-    console.log("maintains show");
-    db.select('maintenance.id AS id, maintenance.status AS status, user.name AS username, title, time, detail, user.phone AS phone, user.address AS address, community.name AS community')
-      .join('user', 'user.openid = maintenance.openid')
-      .join('community', 'community.id = user.communityId')
-      .where({'maintenance.id': req.params.id}).get('maintenance',function(err, maintains, fields){
-      if(err){
-        console.log(err);
-      }else{
-        res.send(maintains[0]);
-      }
-    })
-  });
-  app.post('/admin/maintains/:id', function(req, res){
-    db.where({id: req.params.id}).update('maintenance', {status: req.body.status}, function(err) {
-      if (err) {
-        console.log(err);
-        res.send({result: 'failure'});
-      } else {
-        res.send({result: 'success'});
-      }
-    });
-  });
-  // 投诉建议
-  app.get('/admin/complaints', function(req, res){
-    console.log("complaints index");
-    db.select('complaint.id AS id, complaint.status AS status, user.name AS username, title, time')
-      .join('user', 'user.openid = complaint.openid')
-      .get('complaint',function(err, complaints, fields){
-      if(err){
-        console.log(err);
-      }else{
-        res.send(complaints);
-      }
-    })
-  });
-  app.get('/admin/complaints/:id', function(req, res){
-    db.select('complaint.id AS id, complaint.status AS status, user.name AS username, title, time, detail, user.phone AS phone, user.address AS address, community.name AS community')
-      .join('user', 'user.openid = complaint.openid')
-      .join('community', 'community.id = user.communityId')
-      .where({'complaint.id': req.params.id}).get('complaint',function(err, complaints, fields){
-      if(err){
-        console.log(err);
-      }else{
-        res.send(complaints[0]);
-      }
-    })
-  });
-  app.post('/admin/complaints/:id', function(req, res){
-    db.where({id: req.params.id}).update('complaint', {status: req.body.status}, function(err) {
-      if (err) {
-        console.log(err);
-        res.send({result: 'failure'});
-      } else {
-        res.send({result: 'success'});
-      }
-    });
-  });
-  app.get('/admin/communities', function(req, res){
-    db.get('community',function(err, communities, fields){
-      if(err){
-        console.log(err);
-      }else{
-        res.send(communities);
-      }
-    })
   });
 
   app.post('/upload', function(req, res){

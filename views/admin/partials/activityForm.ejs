@@ -1,0 +1,68 @@
+<div class="row-fluid">
+  <div class="span12">
+    <h3 class="page-title">
+      小区活动
+    </h3>
+    <ul class="breadcrumb">
+      <li>
+        <i class="icon-home"></i>
+        <a href="#/index">Home</a>
+        <i class="icon-angle-right"></i>
+      </li>
+      <li>
+        <a href="#/activities">小区活动</a>
+        <i class="icon-angle-right"></i>
+      </li>
+      <li>
+        <a href="#">{{activity.title}}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="control-group">
+    <label class="control-label">标题</label>
+    <div class="controls">
+      <input type="text" class="m-wrap large" ng-model='activity.title' required />
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="col-sm-2 control-label">封面: </label>
+    <div class="col-sm-10">
+      <span class="help-block">建议尺寸: 360*200px</span>
+      <img class="middle" ng-src="{{activity.cover}}">
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <span class="btn blue fileinput-button">
+        <i class="icon-plus"></i>
+        <span>上传图片</span>
+        <input id="imgupload" type="file" fileupload name="files" data-url="/upload" done="uploadFinished(e, data, 'cover')">
+      </span>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">所属小区</label>
+    <div class="controls">
+      <select class="large m-wrap" ng-model="activity.communityId" required>
+        <option ng-repeat="community in communities" value={{community.id}}>{{community.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">内容</label>
+    <div class="controls">
+      <script id="acteditor" type="text/plain" style="width:945px;height:500px;">
+      </script>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn blue" ng-click="submit()"><i class="icon-ok"></i> 提交</button>
+    <a class="btn" href='#/activitys'>撤销</a>
+  </div>
+</div>

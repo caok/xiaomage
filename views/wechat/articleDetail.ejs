@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小区公告</title>
+    <link rel='stylesheet' href='/stylesheets/main.css' />
+  </head>
+  <body>
+    <div id='notice'>
+      <p class="title"><%=obj.title %></p>
+      <p class="date">
+        <%=obj.time %>
+      </p>
+      <div class="info">
+        <%- obj.detail %>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js" ng-app="myApp">
+<head>
+  <meta charset="utf-8" />
+  <title>小玛哥</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="" name="description" />
+  <meta content="" name="author" />
+  <link href="/media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+  <link href="/media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <link href="/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
+  <link href="/media/css/style.css" rel="stylesheet" type="text/css"/>
+  <link href="/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+  <link href="/media/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+  <link href="/media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+  <link href="/media/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
+  <link href="/media/css/daterangepicker.css" rel="stylesheet" type="text/css" />
+  <link href="/media/css/fullcalendar.css" rel="stylesheet" type="text/css"/>
+  <link href="/media/css/jqvmap.css" rel="stylesheet" type="text/css" media="screen"/>
+  <link href="/media/css/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
+  <link href="/stylesheets/admin.css" rel="stylesheet" type="text/css"/>
+  <!-- END PAGE LEVEL STYLES -->
+  <link rel="shortcut icon" href="media/image/favicon.ico" />
+</head>
+<body class="page-header-fixed" ng-controller="MainCtrl as main">
+  <div class="header navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <a class="brand" href="/admin">
+          <span style="margin-left: 20px;">小玛哥</span>
+        </a>
+        <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+        <img src="media/image/menu-toggler.png" alt="" />
+        </a>
+        <ul class="nav pull-right">
+          <li class="dropdown user">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="username">Admin</span>
+            <i class="icon-angle-down"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="page-container">
+    <div class="page-sidebar nav-collapse collapse">
+      <ul class="page-sidebar-menu">
+        <li style="margin-bottom: 20px;">
+          <div class="sidebar-toggler hidden-phone"></div>
+        </li>
+        <li class="start" ng-class="{active: main.isPath('index')}">
+          <a href="#/index">
+          <i class="icon-home"></i>
+          <span class="title">首页</span>
+          <span class="selected"></span>
+          </a>
+        </li>
+        <li class="last" ng-class="{active: main.isPath('articles')}">
+          <a href="#/articles">
+          <i class="icon-user"></i>
+          <span class="title">趣文</span>
+          <span class="selected"></span>
+          </a>
+        </li>
+        <li class="last" ng-class="{active: main.isPath('daos')}">
+          <a href="#/daos">
+          <i class="icon-map-marker"></i>
+          <span class="title">捣江湖</span>
+          <span class="selected"></span>
+          </a>
+        </li>
+        <li class="last" ng-class="{active: main.isPath('haos')}">
+          <a href="#/haos">
+          <i class="icon-bar-chart"></i>
+          <span class="title">毫稍来看</span>
+          </a>
+        </li>
+        <li class="last" ng-class="{active: main.isPath('days')}">
+          <a href="#/days">
+          <i class="icon-file-text"></i>
+          <span class="title">DayDay Up</span>
+          </a>
+        </li>
+        <li class="last" ng-class="{active: main.isPath('activities')}">
+          <a href="#/activities">
+          <i class="icon-envelope-alt"></i>
+          <span class="title">小区活动</span>
+          </a>
+        </li>
+        <li class="last" ng-class="{active: main.isPath('zhao')}">
+          <a href="#/zhaos">
+          <i class="icon-file-text"></i>
+          <span class="title">招兵买马</span>
+          </a>
+        </li>
+        <li class="last" ng-class="{active: main.isPath('qiu')}">
+          <a href="#/qius">
+          <i class="icon-file-text"></i>
+          <span class="title">求文若渴</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="page-content">
+      <div class="container-fluid">

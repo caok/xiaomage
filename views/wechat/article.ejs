@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小区公告</title>
+  <link rel="stylesheet" href="/stylesheets/ser.css">
+  <script type="text/javascript" src="/javascripts/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+<div id="container">
+</div>
+
+<script>
+    var container = $('#container');
+    var currentList = null;
+    var currentPage = 0;
+
+    function getContent(pagenum){
+        $.get('/wechat/announcement',{page:pagenum},function(rows){
+            if(rows.length == 0)
+                return;
+            for(var i = 0; i < rows.length;i++){
+                var date = rows[i].time;
+                if( !currentList || date !== currentList.theDate){
+                    currentList = $('<div class="list2"></div>');
+                    currentList.theDate = date;
+                    container.append(currentList);
+
+                    currentList.append($(
+                            '<div>'+
+                    '<table class="time" style="font-size: 0.6em">'+
+                    '       <tr style="width: 100%">'+
+                    '       <td style="width: 35%"><hr></td>'+
+                    '<td style="width: 30%; text-align: center">' +
+                                   rows[i].time +'</td>'+
+                    '<td style="width: 35%"><hr></td>'+
+                    '</tr>'+
+                    '</table>'+
+                    '<div  class="message3">'+
+                    '       <div onclick="window.location.href=\'/wechat/announcementDetail?id=' + rows[i].id +
+                                    '\'" style="float: left;width: 65%">'+
+                    '       <div class="title2">' +
+                                   rows[i].title +'</div>'+
+                    '<div class="content2">' +
+                      rows[i].detail.replace(/<[^>]+>/g,"").substring(0,70) +'</div>'+
+                    '</div>'+
+                    '<img src="'+rows[i].cover+'">'+
+                    '<div class="clear"></div>'+
+                    '</div>'
+                    ))
+                }
+                else{
+                    currentList.append($(
+                                    '<div>'+
+                                    '<table class="noTime">'+
+                                    '       <tr style="width: 100%">'+
+                                    '       <td style="width: 100%"><hr></td>'+
+                                    '</tr>'+
+                                    '</table>'+
+                                    '<div class="message3">'+
+                                    '       <div onclick="window.location.href=\'/wechat/announcementDetail?id=' + rows[i].id +
+                                            '\'" style="float: left;width: 65%">'+
+                                    '       <div class="title2">' +
+                                    rows[i].title +'</div>'+
+                                    '<div class="content2">' +
+                                      rows[i].detail.replace(/<[^>]+>/g,"").substring(0,70) +'</div>'+
+                                    '</div>'+
+                                    '<img src="'+ rows[i].cover +'">'+
+                                    '<div class="clear"></div>'+
+                                    '</div>'
+                    ))
+                }
+                $("img").each(function(){
+                  $(this).css("height", $(this).width());
+                });
+            }
+
+        },"json");
+    }
+
+
+    $(function(){
+        getContent(0);
+        currentPage++;
+    })
+
+    $(window).scroll(function(){
+        if($(window).scrollTop() > $(document).height() - $(window).height() - 50){
+            getContent(currentPage);
+            currentPage++;
+        }
+    })
+
+</script>
+
+</body>
+</html>

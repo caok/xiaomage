@@ -1,0 +1,216 @@
+body{
+  margin: 0px;
+  font-size: 100%;
+  background-color: rgb(240,240,240);
+}
+a{
+  text-decoration: none;
+}
+/*维修*/
+.button{
+  display: block;
+  background: url("../images/yellow_button.png") no-repeat;
+  background-size: 100% 100%;
+  /*border: 1px solid rgb(104,144,58);*/
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 1em;
+  line-height: 2em;
+  color: #000000;
+}
+.list{
+  width:100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.5em;
+}
+.list table{
+  margin-bottom: 5%;
+}
+.time{
+  width: 93.91%;
+  margin-right: auto;
+  margin-left: auto;
+}
+.noTime{
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.message{
+  display: block;
+  width: 93.91%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10%;
+}
+.title{
+  font-size: 0.9em;
+  color: #000000;
+}
+.content{
+  font-size: 0.7em;
+  color: rgb(131,131,131);
+}
+.resultSuccess{
+  float: right;
+  font-size: 1em;
+  color: rgb(0,154,67);
+  margin-bottom: 5%;
+}
+.resultInit{
+    float: right;
+    font-size: 1em;
+    color:rgb(66,139,202);
+    margin-bottom: 5%;
+}
+.resultError{
+  float: right;
+  font-size: 1em;
+  color: #ff0000;
+  margin-bottom: 5%;
+}
+/*维修填写*/
+.tianxie_title{
+  font-size: 1.1em;
+  text-align: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+.tianxie{
+  width: 91.25%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tianxie input{
+  width: 100%;
+  font-size: 1.2em;
+  border: 2px solid rgb(150,150,150);
+  border-radius: 8px;
+  margin-bottom: 10%;
+  padding-left: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: rgb(250,250,250);
+  outline: 0px;
+}
+.tianxie textarea{
+  width: 100%;
+  font-size: 1.2em;
+  border: 2px solid rgb(150,150,150);
+  border-radius: 8px;
+  margin-bottom: 10%;
+  background-color: rgb(250,250,250);
+  outline: 0px;
+  padding-left: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+.sub{
+  display: block;
+  background: url("../images/button2.png") no-repeat;
+  background-size: 100% 100%;
+  /*border: 1px solid rgb(104,144,58);*/
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10%;
+  padding-left: 4%;
+  padding-right: 4%;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 1.2em;
+  line-height: 2em;
+  color: rgb(239,225,224);
+    border: none;
+/*letter-spacing: 2em;*/
+}
+/*上门维修*/
+.message2{
+  /*display: block;*/
+  width: 90.16%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+}
+.message2_text{
+  width: 100%;
+  background-color:rgb(255,255,255);
+  border-radius: 9px;
+  padding-bottom: 5%;
+  padding-top: 10%;
+}
+.message2_text div{
+  margin-bottom: 3%;
+  margin-left: 5%;
+  /*width: 100%;*/
+  /*border: 1px solid #000000;*/
+  background-color: rgb(255,255,255);
+}
+.message2_text span{
+  font-size: 1em;
+}
+.message2 a{
+  display: block;
+  background-size: 100% 100%;
+  /*border: 1px solid rgb(104,144,58);*/
+  width: 49.22%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+  padding-left: 4%;
+  padding-right: 4%;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 1.1em;
+  line-height: 3em;
+  color: rgb(239,225,224);
+  /*letter-spacing: 2em;*/
+}
+.a1{
+  background: url("../images/button3.png") no-repeat;
+}
+.a2{
+  background: url("../images/button4.png") no-repeat;
+}
+/*公告list*/
+.list2{
+  width:100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.5em;
+  margin-top: 5%;
+}
+.list2 table{
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+.message3{
+  width: 93.91%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10%;
+}
+.title2{
+  font-size: 0.8em;
+  margin-bottom: 3%;
+}
+.content2{
+  font-size: 0.6em;
+  line-height: 1.2em;
+  color: rgb(131,131,131);
+  /*width: 70%;*/
+}
+.message3 img{
+  float: right;
+  width: 28.125%;
+  /*margin-left: 3%;*/
+}
+.clear{
+  clear: both;
+}

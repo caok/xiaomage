@@ -441,12 +441,9 @@ angular.module('myApp.controllers', [])
   }])
   .controller('activitiesCtrl', ['$scope', '$location', '$routeParams', '$http', 'Activity', function($scope, $location, $routeParams, $http, Activity) {
     if ($routeParams.id) {
-      $http.get('/admin/communities').success(function(communities){
-        $scope.communities = communities;
-      });
       if ($routeParams.id === "new"){
-        // 创建新的小区活动
-        $scope.activity = {title:"", detail:"", communityId:"", cover: ""};
+        // 创建新的活动
+        $scope.activity = {title:"", entitle:"", detail:"", adr:"", enadr:"", cover: "", startAt: "", endAt: ""};
         $scope.submit = function(){
           Activity.save({}, $scope.activity, function(res){
             if (res.result === 'success'){

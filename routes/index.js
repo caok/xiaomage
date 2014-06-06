@@ -856,12 +856,10 @@ module.exports = function(app){
     });
   });
 
-  // 小区活动
+  // 活动
   app.get('/admin/activities', function(req, res){
     console.log("activitys index");
-    db.select('activity.id AS id, community.name AS community, title, time')
-      .join('community', 'community.id = activity.communityId')
-      .get('activity',function(err, activities, fields){
+    db.get('activity',function(err, activities, fields){
       if(err){
         console.log(err);
       }else{
@@ -882,11 +880,14 @@ module.exports = function(app){
   app.post('/admin/activities', function(req, res){
     console.log("activitys create:", req.body.detail);
     var activity = {
-      title:req.body.title,
-      detail:req.body.detail,
-      communityId: req.body.communityId,
-      cover: req.body.cover,
-      time:getDateTime(new Date())
+      title   : req.body.title,
+      entitle : req.body.entitle,
+      cover   : req.body.cover,
+      adr     : req.body.adr,
+      enadr   : req.body.enadr,
+      startAt : req.body.startAt,
+      endAt   : req.body.endAt,
+      detail  : req.body.detail
     }
     db.insert('activity', activity, function(err, activity){
       if (err){
@@ -899,10 +900,14 @@ module.exports = function(app){
   });
   app.post('/admin/activities/:id', function(req, res){
     var activity = {
-      title:req.body.title,
-      detail:req.body.detail,
-      cover: req.body.cover,
-      communityId: req.body.communityId
+      title   : req.body.title,
+      entitle : req.body.entitle,
+      cover   : req.body.cover,
+      adr     : req.body.adr,
+      enadr   : req.body.enadr,
+      startAt : req.body.startAt,
+      endAt   : req.body.endAt,
+      detail  : req.body.detail
     }
     db.where({id: req.params.id}).update('activity', activity, function(err) {
       if (err) {
@@ -1058,53 +1063,6 @@ module.exports = function(app){
   app.delete('/admin/qiu/:id', function(req, res){
     console.log("qiu delete");
     db.where({id: req.params.id}).delete('qiu', function(err) {
-      if (err) {
-        console.log(err);
-        res.send({result: 'failure'});
-      } else {
-        res.send({result: 'success'});
-      }
-    });
-  });
-
-
-  // 用户
-  app.get('/admin/users', function(req, res){
-    console.log("users index");
-    db.select('user.id AS id, user.name AS name, community.name AS community, openid, type, phone, address, info, status')
-      .join('community', 'community.id = user.communityId').get('user',function(err, users, fields){
-      if(err){
-        console.log(err);
-      }else{
-        res.send(users);
-      }
-    })
-  });
-  app.get('/admin/users/:id', function(req, res){
-    console.log("users show");
-    db.where({'user.id': req.params.id})
-      .select('user.id AS id, user.name AS name, community.name AS community, openid, type, phone, address, info, status')
-      .join('community', 'community.id = user.communityId').get('user',function(err, users, fields){
-      if(err){
-        console.log(err);
-      }else{
-        res.send(users[0]);
-      }
-    })
-  });
-  app.post('/admin/users/:id', function(req, res){
-    db.where({id: req.params.id}).update('user', {status: req.body.status}, function(err) {
-      if (err) {
-        console.log(err);
-        res.send({result: 'failure'});
-      } else {
-        res.send({result: 'success'});
-      }
-    });
-  });
-  app.delete('/admin/users/:id', function(req, res){
-    console.log("users delete");
-    db.where({id: req.params.id}).delete('user', function(err) {
       if (err) {
         console.log(err);
         res.send({result: 'failure'});

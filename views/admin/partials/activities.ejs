@@ -1,7 +1,7 @@
 <div class="row-fluid">
   <div class="span12">
     <h3 class="page-title">
-      小区活动
+      活动
     </h3>
     <ul class="breadcrumb">
       <li>
@@ -9,7 +9,7 @@
         <a href="#/index">Home</a>
         <i class="icon-angle-right"></i>
       </li>
-      <li><a href="">小区活动</a></li>
+      <li><a href="">活动</a></li>
     </ul>
   </div>
 </div>
@@ -25,8 +25,9 @@
         <tr>
           <th>#</th>
           <th>标题</th>
-          <th>时间</th>
-          <th>所在小区</th>
+          <th>地址</th>
+          <th>开始时间</th>
+          <th>结束时间</th>
           <th>操作</th>
         </tr>
       </thead>
@@ -34,8 +35,9 @@
         <tr ng-repeat="activity in activities">
           <td>{{$index + 1}}</td>
           <td>{{activity.title}}</td>
-          <td>{{activity.time | date:"yyyy-MM-dd HH:mm"}}</td>
-          <td>{{activity.community}}</td>
+          <td>{{activity.adr}}</td>
+          <td>{{activity.startAt | date:"yyyy-MM-dd HH:mm"}}</td>
+          <td>{{activity.endAt | date:"yyyy-MM-dd HH:mm"}}</td>
           <td>
             <a href="#/activities/{{activity.id}}" class="btn btn-warning btn-xs">
               <span class="glyphicon glyphicon-edit"></span>编辑

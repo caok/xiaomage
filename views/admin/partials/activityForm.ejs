@@ -1,7 +1,7 @@
 <div class="row-fluid">
   <div class="span12">
     <h3 class="page-title">
-      小区活动
+      活动
     </h3>
     <ul class="breadcrumb">
       <li>
@@ -10,7 +10,7 @@
         <i class="icon-angle-right"></i>
       </li>
       <li>
-        <a href="#/activities">小区活动</a>
+        <a href="#/activities">活动</a>
         <i class="icon-angle-right"></i>
       </li>
       <li>
@@ -24,6 +24,13 @@
     <label class="control-label">标题</label>
     <div class="controls">
       <input type="text" class="m-wrap large" ng-model='activity.title' required />
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">英语标题</label>
+    <div class="controls">
+      <input type="text" class="m-wrap large" ng-model='activity.entitle' required />
     </div>
   </div>
 
@@ -45,11 +52,30 @@
   </div>
 
   <div class="control-group">
-    <label class="control-label">所属小区</label>
+    <label class="control-label">活动地址</label>
     <div class="controls">
-      <select class="large m-wrap" ng-model="activity.communityId" required>
-        <option ng-repeat="community in communities" value={{community.id}}>{{community.name}}</option>
-      </select>
+      <input type="text" class="m-wrap large" ng-model='activity.adr' required />
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">活动地址(英语)</label>
+    <div class="controls">
+      <input type="text" class="m-wrap large" ng-model='activity.enadr' required />
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">开始时间</label>
+    <div class="controls">
+      <input type="text" class="m-wrap large" ng-model='activity.startAt' placeholder="yyyy-MM-dd HH:mm" required />
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">结束时间</label>
+    <div class="controls">
+      <input type="text" class="m-wrap large" ng-model='activity.endAt' required />
     </div>
   </div>
 

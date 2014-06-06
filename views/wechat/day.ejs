@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DayDay Up</title>
+  <link rel="stylesheet" href="/stylesheets/ser.css">
+  <script type="text/javascript" src="/javascripts/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="/javascripts/date.js"></script>
+</head>
+<body>
+<div id="container">
+</div>
+
+<script>
+    var container = $('#container');
+    var currentList = null;
+    var currentPage = 0;
+
+    function getContent(pagenum){
+        $.get('/wechat/day',{page:pagenum},function(rows){
+            if(rows.length == 0)
+                return;
+            for(var i = 0; i < rows.length;i++){
+                var date = rows[i].time;
+                var current_date = new Date();
+                current_date = current_date.Format('yyyy-M-d');
+                if( !currentList || date !== currentList.theDate){
+                    currentList = $('<div class="list2"></div>');
+                    currentList.theDate = date;
+                    container.append(currentList);
+
+                    if (current_date !== date){
+                      var headline = '<table class="time" style="font-size: 0.6em">'+
+                                     '       <tr style="width: 100%">'+
+                                     '       <td style="width: 35%"><hr></td>'+
+                                     '<td style="width: 30%; text-align: center">' +
+                                                    rows[i].time +'</td>'+
+                                     '<td style="width: 35%"><hr></td>'+
+                                     '</tr>'+
+                                     '</table>';
+                    } else {
+                      var headline = "";
+                    }
+                    currentList.append($(
+                            '<div>'+headline+
+                    '<div  class="message3">'+
+                    '       <div onclick="window.location.href=\'/wechat/dayDetail?id=' + rows[i].id +
+                                    '\'" style="float: left;width: 65%">'+
+                    '       <div class="title2">' +
+                                   rows[i].title +'</div>'+
+                    '<div class="content2">' +
+                      rows[i].abstract +'</div>'+
+                    '</div>'+
+                    '<img src="'+rows[i].cover+'">'+
+                    '<div class="clear"></div>'+
+                    '</div>'
+                    ))
+                }
+                else{
+                    currentList.append($(
+                                    '<div>'+
+                                    '<table class="noTime">'+
+                                    '       <tr style="width: 100%">'+
+                                    '       <td style="width: 100%"><hr></td>'+
+                                    '</tr>'+
+                                    '</table>'+
+                                    '<div class="message3">'+
+                                    '       <div onclick="window.location.href=\'/wechat/dayDetail?id=' + rows[i].id +
+                                            '\'" style="float: left;width: 65%">'+
+                                    '       <div class="title2">' +
+                                    rows[i].title +'</div>'+
+                                    '<div class="content2">' +
+                                      rows[i].abstract +'</div>'+
+                                    '</div>'+
+                                    '<img src="'+ rows[i].cover +'">'+
+                                    '<div class="clear"></div>'+
+                                    '</div>'
+                    ))
+                }
+                $("img").each(function(){
+                  $(this).css("height", $(this).width());
+                });
+            }
+
+        },"json");
+    }
+
+
+    $(function(){
+        getContent(0);
+        currentPage++;
+    })
+
+    $(window).scroll(function(){
+        if($(window).scrollTop() > $(document).height() - $(window).height() - 50){
+            getContent(currentPage);
+            currentPage++;
+        }
+    })
+
+</script>
+
+</body>
+</html>

@@ -212,3 +212,14 @@ body {
   width: 40%;
   float: right
 }
+
+#footer {
+  width: 100%;
+  background-color: #00439A;
+  color: white;
+  text-align: center;
+  padding: 2% 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  letter-spacing: 2px;
+}

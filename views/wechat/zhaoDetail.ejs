@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>招兵买马</title>
+    <link rel='stylesheet' href='/stylesheets/main.css' />
+  </head>
+  <body>
+    <div id='notice'>
+      <div class="abstract">
+        <%= obj.abstract %>
+      </div>
+      <p class="title"><%=obj.title %></p>
+      <p class="date">
+        <%= obj.time %>
+      </p>
+      <div class="info">
+        <img src="<%= obj.cover %>" alt="">
+        <%- obj.detail %>
+      </div>
+      <div class="me">
+        <table>
+         <tr style="width: 100%">
+          <td style="width:32%"><hr></td>
+          <td style="width:36%; text-align:center">请关注小玛哥</td>
+          <td style="width:32%"><hr></td>
+         </tr>
+        </table>
+        <div class="logos">
+          <img src="/images/logo2.png" alt="" class="left">
+          <img src="/images/qr.png" alt="" class="right">
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div id="footer">
+      Learning By Using
+    </div>
+  </body>
+</html>

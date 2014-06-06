@@ -287,6 +287,196 @@ module.exports = function(app){
         })
     })
 
+    //捣江湖
+    app.get('/wechat/dao',function(req,res){
+      if(!req.query.page) {
+        res.render('wechat/dao');
+        return;
+      }
+      db.select(['dao.id','dao.title','dao.abstract','dao.time', 'dao.cover'])
+        .order_by('time desc')
+        .limit(10,10*parseInt(req.query.page))
+        .get('dao',function(err,rows,fields){
+          if(err){
+            console.log(err.toString());
+            return;
+          }
+          console.log(rows.length);
+          for(var i = 0; i < rows.length;i++){
+            rows[i].time = rows[i].time.Format('yyyy-M-d');
+          }
+          res.write(JSON.stringify(rows));
+          res.end();
+        })
+    })
+
+    app.get('/wechat/daoDetail',function(req,res){
+      db.where('id',parseInt(req.query.id))
+        .get('dao',function(err,rows,fields){
+          if(err){
+            console.log(err.toString());
+            return;
+          }
+          if(rows.length !== 1){
+            return;
+          }
+          rows[0].time = rows[0].time.Format('yyyy-M-d');
+          res.render('wechat/daoDetail',{obj:rows[0]});
+        })
+    })
+
+    //毫稍来看
+    app.get('/wechat/hao',function(req,res){
+      if(!req.query.page) {
+        res.render('wechat/hao');
+        return;
+      }
+      db.select(['hao.id','hao.title','hao.abstract','hao.time', 'hao.cover'])
+        .order_by('time desc')
+        .limit(10,10*parseInt(req.query.page))
+        .get('hao',function(err,rows,fields){
+          if(err){
+            console.log(err.toString());
+            return;
+          }
+          console.log(rows.length);
+          for(var i = 0; i < rows.length;i++){
+            rows[i].time = rows[i].time.Format('yyyy-M-d');
+          }
+          res.write(JSON.stringify(rows));
+          res.end();
+        })
+    })
+
+    app.get('/wechat/haoDetail',function(req,res){
+      db.where('id',parseInt(req.query.id))
+        .get('hao',function(err,rows,fields){
+          if(err){
+            console.log(err.toString());
+            return;
+          }
+          if(rows.length !== 1){
+            return;
+          }
+          rows[0].time = rows[0].time.Format('yyyy-M-d');
+          res.render('wechat/haoDetail',{obj:rows[0]});
+        })
+    })
+
+    //DayDay Up
+    app.get('/wechat/day',function(req,res){
+      if(!req.query.page) {
+        res.render('wechat/day');
+        return;
+      }
+      db.select(['day.id','day.title','day.abstract','day.time', 'day.cover'])
+        .order_by('time desc')
+        .limit(10,10*parseInt(req.query.page))
+        .get('day',function(err,rows,fields){
+          if(err){
+            console.log(err.toString());
+            return;
+          }
+          console.log(rows.length);
+          for(var i = 0; i < rows.length;i++){
+            rows[i].time = rows[i].time.Format('yyyy-M-d');
+          }
+          res.write(JSON.stringify(rows));
+          res.end();
+        })
+    })
+
+    app.get('/wechat/dayDetail',function(req,res){
+      db.where('id',parseInt(req.query.id))
+        .get('day',function(err,rows,fields){
+          if(err){
+            console.log(err.toString());
+            return;
+          }
+          if(rows.length !== 1){
+            return;
+          }
+          rows[0].time = rows[0].time.Format('yyyy-M-d');
+          res.render('wechat/dayDetail',{obj:rows[0]});
+        })
+    })
+
+    //招兵买马
+    app.get('/wechat/zhao',function(req,res){
+      if(!req.query.page) {
+        res.render('wechat/zhao');
+        return;
+      }
+      db.select(['zhao.id','zhao.title','zhao.abstract','zhao.time', 'zhao.cover'])
+        .order_by('time desc')
+        .limit(10,10*parseInt(req.query.page))
+        .get('zhao',function(err,rows,fields){
+          if(err){
+            console.log(err.toString());
+            return;
+          }
+          console.log(rows.length);
+          for(var i = 0; i < rows.length;i++){
+            rows[i].time = rows[i].time.Format('yyyy-M-d');
+          }
+          res.write(JSON.stringify(rows));
+          res.end();
+        })
+    })
+
+    app.get('/wechat/zhaoDetail',function(req,res){
+      db.where('id',parseInt(req.query.id))
+        .get('zhao',function(err,rows,fields){
+          if(err){
+            console.log(err.toString());
+            return;
+          }
+          if(rows.length !== 1){
+            return;
+          }
+          rows[0].time = rows[0].time.Format('yyyy-M-d');
+          res.render('wechat/zhaoDetail',{obj:rows[0]});
+        })
+    })
+
+    //求文若渴
+    app.get('/wechat/qiu',function(req,res){
+      if(!req.query.page) {
+        res.render('wechat/qiu');
+        return;
+      }
+      db.select(['qiu.id','qiu.title','qiu.abstract','qiu.time', 'qiu.cover'])
+        .order_by('time desc')
+        .limit(10,10*parseInt(req.query.page))
+        .get('qiu',function(err,rows,fields){
+          if(err){
+            console.log(err.toString());
+            return;
+          }
+          console.log(rows.length);
+          for(var i = 0; i < rows.length;i++){
+            rows[i].time = rows[i].time.Format('yyyy-M-d');
+          }
+          res.write(JSON.stringify(rows));
+          res.end();
+        })
+    })
+
+    app.get('/wechat/qiuDetail',function(req,res){
+      db.where('id',parseInt(req.query.id))
+        .get('qiu',function(err,rows,fields){
+          if(err){
+            console.log(err.toString());
+            return;
+          }
+          if(rows.length !== 1){
+            return;
+          }
+          rows[0].time = rows[0].time.Format('yyyy-M-d');
+          res.render('wechat/qiuDetail',{obj:rows[0]});
+        })
+    })
+
   //活动
   app.get('/wechat/activity', function(req, res){
     if(!req.query.page) {

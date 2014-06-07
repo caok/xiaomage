@@ -1,12 +1,12 @@
 body{
   margin: 0px;
   font-size: 100%;
-  background-color: rgb(240,240,240);
+  /*background-color: rgb(240,240,240);*/
+  background-color: white;
 }
 a{
   text-decoration: none;
 }
-/*维修*/
 .button{
   display: block;
   background: url("../images/yellow_button.png") no-repeat;
@@ -186,15 +186,23 @@ a{
   font-size: 1.5em;
   margin-top: 5%;
 }
-.list2 table{
+.list2 table.time{
   margin-top: 3%;
   margin-bottom: 3%;
+}
+.list2 table.noTime{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.list2 table hr{
+  margin: 5px 0;
+  border: 0px;
+  border-top: 1px solid #EAEAEA;
 }
 .message3{
   width: 93.91%;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 10%;
 }
 .title2{
   font-size: 0.8em;
@@ -213,4 +221,15 @@ a{
 }
 .clear{
   clear: both;
+}
+.title3{
+  font-size: 0.7em;
+  margin-bottom: 3%;
+}
+.content3{
+  font-size: 0.6em;
+  color: gray;
+}
+#container {
+  margin: 5% 0;
 }

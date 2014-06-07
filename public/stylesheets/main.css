@@ -152,7 +152,7 @@ body {
 #notice {
   width: 100%;
   min-height: 100%;
-  background-color: #FAFAFA;
+  background-color: white;
   padding: 5%;
 }
 
@@ -161,6 +161,7 @@ body {
   text-align: center;
   margin: 0;
   font-size: 1.4em;
+  margin: 6px 0;
 }
 
 #notice p.date {
@@ -168,6 +169,18 @@ body {
   text-align: center;
   font-size: 0.9em;
   color: gray;
+  margin: 6px 0;
+}
+#notice p.adr {
+  width: 100%;
+  text-align: center;
+  font-size: 0.9em;
+  color: gray;
+  margin: 6px 0;
+}
+
+#notice .group {
+  margin: 6% 0;
 }
 
 #notice .info {
@@ -211,6 +224,13 @@ body {
 #notice .logos img.right {
   width: 40%;
   float: right
+}
+
+#notice p.toplogo {
+  text-align: center;
+}
+#notice p.toplogo img{
+  width: 40%;
 }
 
 #footer {

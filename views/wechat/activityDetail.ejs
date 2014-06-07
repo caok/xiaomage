@@ -2,18 +2,50 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小区活动</title>
+    <title>活动</title>
     <link rel='stylesheet' href='/stylesheets/main.css' />
   </head>
   <body>
     <div id='notice'>
-      <p class="title"><%=obj.title %></p>
-      <p class="date">
-        <%=obj.time %>
-      </p>
+      <p class="toplogo"><img src="/images/logo1.jpg" alt=""></p>
+      <div class="group">
+        <p class="title"><%=obj.title %></p>
+        <p class="date">
+          <%= obj.time %>
+        </p>
+        <p class="adr">
+          <%= obj.adr %>
+        </p>
+      </div>
+      <div class="group">
+        <p class="title"><%=obj.entitle %></p>
+        <p class="date">
+          <%= obj.time %>
+        </p>
+        <p class="adr">
+          <%= obj.enadr %>
+        </p>
+      </div>
       <div class="info">
         <%- obj.detail %>
       </div>
+      <div class="me">
+        <table>
+         <tr style="width: 100%">
+          <td style="width:32%"><hr></td>
+          <td style="width:36%; text-align:center">请关注小玛哥</td>
+          <td style="width:32%"><hr></td>
+         </tr>
+        </table>
+        <div class="logos">
+          <img src="/images/logo2.png" alt="" class="left">
+          <img src="/images/qr.png" alt="" class="right">
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div id="footer">
+      Learning By Using
     </div>
   </body>
 </html>

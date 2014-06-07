@@ -15,7 +15,8 @@ var config = {
         AppId:'wx125415047174c1cc',
         AppSecret:'70c86542368f421cbf5f617dc0859c0a'
     },
-    port:9700
+    port:3700
+    //port:9700
 };
 
 module.exports = config;

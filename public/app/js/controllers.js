@@ -184,7 +184,7 @@ angular.module('myApp.controllers', [])
           };
         });
       };
-      $scope.title = "趣文";
+      $scope.title = "毫稍来看";
       $scope.url = "haos";
       $scope.uploadFinished = function(e, data, name) {
         $scope.obj.cover = data.result.file.path;

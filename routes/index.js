@@ -483,9 +483,8 @@ module.exports = function(app){
       res.render('wechat/activity');
       return;
     }
-    db.select(['activity.id','activity.title','activity.detail',
-    'activity.time', 'activity.cover'])
-      .order_by('time desc')
+    db.select(['activity.id','activity.entitle','activity.startAt', 'activity.cover'])
+      .order_by('id desc')
       .limit(10,10* parseInt(req.query.page))
       .get('activity',function(err,rows,fields){
          if(err){
@@ -494,7 +493,7 @@ module.exports = function(app){
          }
          console.log(rows.length);
          for(var i = 0; i < rows.length;i++){
-             rows[i].time = rows[i].time.Format('yyyy-M-d');
+             rows[i].time = rows[i].startAt.Format('yyyy.M.d hh:mm');
          }
          res.write(JSON.stringify(rows));
          res.end();
@@ -511,7 +510,11 @@ module.exports = function(app){
           if(rows.length !== 1){
               return;
           }
-          rows[0].time = rows[0].time.Format('yyyy年M月d日 hh:mm');
+          if (rows[0].startAt.Format('yyyy-M-d') == rows[0].endAt.Format('yyyy-M-d')){
+            rows[0].time = rows[0].startAt.Format('yyyy年M月d日 hh:mm') + " - " + rows[0].endAt.Format('hh:mm');
+          } else {
+            rows[0].time = rows[0].startAt.Format('yyyy年M月d日 hh:mm') + " - " +  rows[0].endAt.Format('yyyy年M月d日 hh:mm');
+          }
           res.render('wechat/activityDetail',{obj:rows[0]});
       })
   })

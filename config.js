@@ -11,7 +11,7 @@ var config = {
     },
     wechat:{
         accessToken:'11235813',
-        URL:'http://wechat.martz.cn',
+        url:'http://wechat.martz.cn',
         AppId:'wx8e9801bd8d702d7e',
         AppSecret:'9219df7022fcd183dae5b4130d55bc09'
     },

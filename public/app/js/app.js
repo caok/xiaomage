@@ -23,5 +23,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/qius/:id',    {templateUrl: 'partials/form', controller: 'qiusCtrl'});
   $routeProvider.when('/activities',    {templateUrl: 'partials/activities', controller: 'activitiesCtrl'});
   $routeProvider.when('/activities/:id',    {templateUrl: 'partials/activityForm', controller: 'activitiesCtrl'});
+  $routeProvider.when('/setting', {templateUrl: 'partials/admin', controller: 'settingCtrl'});
+  $routeProvider.when('/setting/:id', {templateUrl: 'partials/adminForm', controller: 'settingCtrl'});
   $routeProvider.otherwise({redirectTo: '/index'});
 }]);

@@ -1075,6 +1075,86 @@ module.exports = function(app){
     });
   });
 
+  // ------------------ 管理员管理 ----------------
+  app.get('/admin/setting', function (req, res, next) {
+    console.log("admin list");
+    db.get('admin', function(err, admins, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(admins);
+      }
+    });
+  });
+
+  app.get('/admin/setting/:id', function (req, res, next) {
+    console.log("admin show");
+    db.where({id: req.params.id}).get('admin',function(err, admins, fields){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(admins[0]);
+      }
+    })
+  });
+
+  app.post('/admin/setting', function (req, res, next) {
+    console.log("admin create");
+    db.where({name: req.params.name}).get('admin',function(err, admins, fields){
+      if (err){
+        return console.log(err);
+      }
+      if (admins.length > 0){
+        res.send({result: 'failure', message: '该用户名已经被使用!'})
+        return;
+      } else {
+        var md5sum = crypto.createHash('md5');
+        md5sum.update(req.body.password);
+        var pwdstr = md5sum.digest('hex');
+        var admin = {
+          name: req.body.name,
+          password: pwdstr
+        }
+        db.insert('admin', admin, function(err, admin){
+          if (err){
+            console.log(err);
+            res.send({result: 'failure'});
+          } else {
+            res.send({result: 'success'});
+          };
+        })
+      }
+    });
+  });
+
+  app.post('/admin/setting/:id', function (req, res, next) {
+    console.log("admin update");
+    var md5sum = crypto.createHash('md5');
+    md5sum.update(req.body.password);
+    var pwdstr = md5sum.digest('hex');
+    var admin = {password:pwdstr};
+    db.where({id: req.params.id}).update('admin', admin, function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+
+  app.delete('/admin/setting/:id', function (req, res, next) {
+    db.where({id: req.params.id}).delete('admin', function(err) {
+      if (err) {
+        console.log(err);
+        res.send({result: 'failure'});
+      } else {
+        res.send({result: 'success'});
+      }
+    });
+  });
+
+  // ------------------ 其他 ----------------------
   app.post('/upload', function(req, res){
     if(!req.files.files){
       res.send(false);

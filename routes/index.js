@@ -511,9 +511,9 @@ module.exports = function(app){
               return;
           }
           if (rows[0].startAt.Format('yyyy-M-d') == rows[0].endAt.Format('yyyy-M-d')){
-            rows[0].time = rows[0].startAt.Format('yyyy年M月d日 hh:mm') + " - " + rows[0].endAt.Format('hh:mm');
+            rows[0].time = rows[0].startAt.Format('yyyy.M.d hh:mm') + " - " + rows[0].endAt.Format('hh:mm');
           } else {
-            rows[0].time = rows[0].startAt.Format('yyyy年M月d日 hh:mm') + " - " +  rows[0].endAt.Format('yyyy年M月d日 hh:mm');
+            rows[0].time = rows[0].startAt.Format('yyyy.M.d hh:mm') + " - " +  rows[0].endAt.Format('yyyy.M.d hh:mm');
           }
           res.render('wechat/activityDetail',{obj:rows[0]});
       })

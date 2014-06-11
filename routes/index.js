@@ -618,7 +618,6 @@ module.exports = function(app){
   });
   app.post('/admin/article/:id', function(req, res){
     console.log("article update");
-    console.log(req.body.detail);
     var article = {
       title:req.body.title,
       cover:req.body.cover,

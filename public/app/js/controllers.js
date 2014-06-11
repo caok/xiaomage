@@ -27,6 +27,21 @@ angular.module('myApp.controllers', [])
             }
           });
         };
+        if (editor){
+          UE.getEditor('editor').destroy();
+        }
+        editor = UE.getEditor('editor');
+        if (editor){
+          editor.addListener( 'ready', function() {
+            editor.setContent($scope.obj.detail, true);
+            editor.focus();
+            editor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
       } else {
         // 更新
         Article.get({id: $routeParams.id}, function(article){
@@ -40,6 +55,21 @@ angular.module('myApp.controllers', [])
               }
             });
           };
+          if (editor){
+            UE.getEditor('editor').destroy();
+          }
+          editor = UE.getEditor('editor');
+          if (editor){
+            editor.addListener( 'ready', function() {
+              editor.setContent($scope.obj.detail, true);
+              editor.focus();
+              editor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
         });
       };
       $scope.title = "趣文";
@@ -47,21 +77,6 @@ angular.module('myApp.controllers', [])
       $scope.uploadFinished = function(e, data, name) {
         $scope.obj.cover = data.result.file.path;
       };
-      if (editor){
-        UE.getEditor('editor').destroy();
-      }
-      editor = UE.getEditor('editor');
-      if (editor){
-        editor.addListener( 'ready', function() {
-          editor.setContent($scope.obj.detail, true);
-          editor.focus();
-          editor.addListener('contentChange', function() {
-            $scope.$apply(function () {
-              $scope.obj.detail = editor.getContent();
-            });
-          });
-        });
-      }
     } else {
       // 清单
       Article.query(function(articles){
@@ -98,6 +113,21 @@ angular.module('myApp.controllers', [])
             }
           });
         };
+        if (editor){
+          UE.getEditor('editor').destroy();
+        }
+        editor = UE.getEditor('editor');
+        if (editor){
+          editor.addListener( 'ready', function() {
+            editor.setContent($scope.obj.detail, true);
+            editor.focus();
+            editor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
       } else {
         // 更新
         Dao.get({id: $routeParams.id}, function(dao){
@@ -111,6 +141,21 @@ angular.module('myApp.controllers', [])
               }
             });
           };
+          if (editor){
+            UE.getEditor('editor').destroy();
+          }
+          editor = UE.getEditor('editor');
+          if (editor){
+            editor.addListener( 'ready', function() {
+              editor.setContent($scope.obj.detail, true);
+              editor.focus();
+              editor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
         });
       };
       $scope.title = "捣江湖";
@@ -118,21 +163,6 @@ angular.module('myApp.controllers', [])
       $scope.uploadFinished = function(e, data, name) {
         $scope.obj.cover = data.result.file.path;
       };
-      if (editor){
-        UE.getEditor('editor').destroy();
-      }
-      editor = UE.getEditor('editor');
-      if (editor){
-        editor.addListener( 'ready', function() {
-          editor.setContent($scope.obj.detail, true);
-          editor.focus();
-          editor.addListener('contentChange', function() {
-            $scope.$apply(function () {
-              $scope.obj.detail = editor.getContent();
-            });
-          });
-        });
-      }
     } else {
       // 清单
       Dao.query(function(daos){
@@ -169,6 +199,21 @@ angular.module('myApp.controllers', [])
             }
           });
         };
+        if (editor){
+          UE.getEditor('editor').destroy();
+        }
+        editor = UE.getEditor('editor');
+        if (editor){
+          editor.addListener( 'ready', function() {
+            editor.setContent($scope.obj.detail, true);
+            editor.focus();
+            editor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
       } else {
         // 更新
         Hao.get({id: $routeParams.id}, function(hao){
@@ -182,6 +227,21 @@ angular.module('myApp.controllers', [])
               }
             });
           };
+          if (editor){
+            UE.getEditor('editor').destroy();
+          }
+          editor = UE.getEditor('editor');
+          if (editor){
+            editor.addListener( 'ready', function() {
+              editor.setContent($scope.obj.detail, true);
+              editor.focus();
+              editor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
         });
       };
       $scope.title = "毫稍来看";
@@ -189,21 +249,6 @@ angular.module('myApp.controllers', [])
       $scope.uploadFinished = function(e, data, name) {
         $scope.obj.cover = data.result.file.path;
       };
-      if (editor){
-        UE.getEditor('editor').destroy();
-      }
-      editor = UE.getEditor('editor');
-      if (editor){
-        editor.addListener( 'ready', function() {
-          editor.setContent($scope.obj.detail, true);
-          editor.focus();
-          editor.addListener('contentChange', function() {
-            $scope.$apply(function () {
-              $scope.obj.detail = editor.getContent();
-            });
-          });
-        });
-      }
     } else {
       // 清单
       Hao.query(function(haos){
@@ -240,6 +285,21 @@ angular.module('myApp.controllers', [])
             }
           });
         };
+        if (editor){
+          UE.getEditor('editor').destroy();
+        }
+        editor = UE.getEditor('editor');
+        if (editor){
+          editor.addListener( 'ready', function() {
+            editor.setContent($scope.obj.detail, true);
+            editor.focus();
+            editor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
       } else {
         // 更新
         Day.get({id: $routeParams.id}, function(day){
@@ -253,6 +313,21 @@ angular.module('myApp.controllers', [])
               }
             });
           };
+          if (editor){
+            UE.getEditor('editor').destroy();
+          }
+          editor = UE.getEditor('editor');
+          if (editor){
+            editor.addListener( 'ready', function() {
+              editor.setContent($scope.obj.detail, true);
+              editor.focus();
+              editor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
         });
       };
       $scope.title = "DayDay Up";
@@ -260,21 +335,6 @@ angular.module('myApp.controllers', [])
       $scope.uploadFinished = function(e, data, name) {
         $scope.obj.cover = data.result.file.path;
       };
-      if (editor){
-        UE.getEditor('editor').destroy();
-      }
-      editor = UE.getEditor('editor');
-      if (editor){
-        editor.addListener( 'ready', function() {
-          editor.setContent($scope.obj.detail, true);
-          editor.focus();
-          editor.addListener('contentChange', function() {
-            $scope.$apply(function () {
-              $scope.obj.detail = editor.getContent();
-            });
-          });
-        });
-      }
     } else {
       // 清单
       Day.query(function(days){
@@ -311,6 +371,21 @@ angular.module('myApp.controllers', [])
             }
           });
         };
+        if (editor){
+          UE.getEditor('editor').destroy();
+        }
+        editor = UE.getEditor('editor');
+        if (editor){
+          editor.addListener( 'ready', function() {
+            editor.setContent($scope.obj.detail, true);
+            editor.focus();
+            editor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
       } else {
         // 更新
         Zhao.get({id: $routeParams.id}, function(zhao){
@@ -324,6 +399,21 @@ angular.module('myApp.controllers', [])
               }
             });
           };
+          if (editor){
+            UE.getEditor('editor').destroy();
+          }
+          editor = UE.getEditor('editor');
+          if (editor){
+            editor.addListener( 'ready', function() {
+              editor.setContent($scope.obj.detail, true);
+              editor.focus();
+              editor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
         });
       };
       $scope.title = "招兵买马";
@@ -331,21 +421,6 @@ angular.module('myApp.controllers', [])
       $scope.uploadFinished = function(e, data, name) {
         $scope.obj.cover = data.result.file.path;
       };
-      if (editor){
-        UE.getEditor('editor').destroy();
-      }
-      editor = UE.getEditor('editor');
-      if (editor){
-        editor.addListener( 'ready', function() {
-          editor.setContent($scope.obj.detail, true);
-          editor.focus();
-          editor.addListener('contentChange', function() {
-            $scope.$apply(function () {
-              $scope.obj.detail = editor.getContent();
-            });
-          });
-        });
-      }
     } else {
       // 清单
       Zhao.query(function(zhaos){
@@ -382,6 +457,21 @@ angular.module('myApp.controllers', [])
             }
           });
         };
+        if (editor){
+          UE.getEditor('editor').destroy();
+        }
+        editor = UE.getEditor('editor');
+        if (editor){
+          editor.addListener( 'ready', function() {
+            editor.setContent($scope.obj.detail, true);
+            editor.focus();
+            editor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
       } else {
         // 更新
         Qiu.get({id: $routeParams.id}, function(qiu){
@@ -395,6 +485,21 @@ angular.module('myApp.controllers', [])
               }
             });
           };
+          if (editor){
+            UE.getEditor('editor').destroy();
+          }
+          editor = UE.getEditor('editor');
+          if (editor){
+            editor.addListener( 'ready', function() {
+              editor.setContent($scope.obj.detail, true);
+              editor.focus();
+              editor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
         });
       };
       $scope.title = "求之若渴";
@@ -402,21 +507,6 @@ angular.module('myApp.controllers', [])
       $scope.uploadFinished = function(e, data, name) {
         $scope.obj.cover = data.result.file.path;
       };
-      if (editor){
-        UE.getEditor('editor').destroy();
-      }
-      editor = UE.getEditor('editor');
-      if (editor){
-        editor.addListener( 'ready', function() {
-          editor.setContent($scope.obj.detail, true);
-          editor.focus();
-          editor.addListener('contentChange', function() {
-            $scope.$apply(function () {
-              $scope.obj.detail = editor.getContent();
-            });
-          });
-        });
-      }
     } else {
       // 清单
       Qiu.query(function(qius){
@@ -453,6 +543,21 @@ angular.module('myApp.controllers', [])
             }
           });
         };
+        if (acteditor){
+          UE.getEditor('acteditor').destroy();
+        }
+        acteditor = UE.getEditor('acteditor');
+        if (acteditor){
+          acteditor.addListener( 'ready', function() {
+            acteditor.setContent($scope.activity.detail, true);
+            acteditor.focus();
+            acteditor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.activity.detail = acteditor.getContent();
+              });
+            });
+          });
+        }
       } else {
         // 更新
         Activity.get({id: $routeParams.id}, function(activity){
@@ -466,26 +571,26 @@ angular.module('myApp.controllers', [])
               }
             });
           };
+          if (acteditor){
+            UE.getEditor('acteditor').destroy();
+          }
+          acteditor = UE.getEditor('acteditor');
+          if (acteditor){
+            acteditor.addListener( 'ready', function() {
+              acteditor.setContent($scope.activity.detail, true);
+              acteditor.focus();
+              acteditor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.activity.detail = acteditor.getContent();
+                });
+              });
+            });
+          }
         });
       };
       $scope.uploadFinished = function(e, data, name) {
         $scope.activity.cover = data.result.file.path;
       };
-      if (acteditor){
-        UE.getEditor('acteditor').destroy();
-      }
-      acteditor = UE.getEditor('acteditor');
-      if (acteditor){
-        acteditor.addListener( 'ready', function() {
-          acteditor.setContent($scope.activity.detail, true);
-          acteditor.focus();
-          acteditor.addListener('contentChange', function() {
-            $scope.$apply(function () {
-              $scope.activity.detail = acteditor.getContent();
-            });
-          });
-        });
-      }
     } else {
       // 清单
       Activity.query(function(activities){

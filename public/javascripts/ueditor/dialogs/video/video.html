@@ -1,30 +1,31 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <script type="text/javascript" src="../internal.js"></script>
     <link rel="stylesheet" type="text/css" href="video.css" />
 </head>
+
 <body>
 <div class="wrapper">
     <div id="videoTab">
-        <div id="tabHeads" class="tabhead">
-            <span tabSrc="video" class="focus" data-content-id="video"><var id="lang_tab_insertV"></var></span>
-            <span tabSrc="upload" data-content-id="upload"><var id="lang_tab_uploadV"></var></span>
+        <div id="tabHeads">
+            <span tabSrc="video" canclick="1" class="focus"><var id="lang_tab_insertV"></var></span>
+            <em style="display:inline-block;margin-left:.5em;vertical-align:middle;font-style:normal;font-weight:400;color:#666666;font-size:14px;">只支持腾讯视频</em>
+            <label canclick="0"><var id="lang_label_tip"></var></label>
+            <span canclick="1" tabSrc="videoSearch" style="display:none;"><var id="lang_tab_searchV"></var></span>
         </div>
-        <!--<span tabSrc="video" data-content-id="videoSearch"><var id="lang_tab_searchV"></var></span>-->
-        <div id="tabBodys" class="tabbody">
+        <div id="tabBodys">
             <div id="video" class="panel">
                <table><tr><td><label for="videoUrl" class="url"><var id="lang_video_url"></var></label></td><td><input id="videoUrl" type="text"></td></tr></table>
                <div id="preview"></div>
-               <div id="videoInfo">
+               <div id="videoInfo" style="display:none;">
                    <fieldset>
                        <legend><var id="lang_video_size"></var></legend>
                        <table>
-                           <tr><td><label for="videoWidth"><var id="lang_videoW"></var></label></td><td><input class="txt" id="videoWidth" type="text"/></td></tr>
-                           <tr><td><label for="videoHeight"><var id="lang_videoH"></var></label></td><td><input class="txt" id="videoHeight" type="text"/></td></tr>
+                           <tr><td><label for="videoWidth"><var id="lang_videoW"></var></label></td><td><input class="txt" id="videoWidth" type="text" value="300"/></td></tr>
+                           <tr><td><label for="videoHeight"><var id="lang_videoH"></var></label></td><td><input class="txt" id="videoHeight" type="text" value="200"/></td></tr>
                        </table>
                    </fieldset>
                    <fieldset>
@@ -33,7 +34,6 @@
                   </fieldset>
                </div>
             </div>
-            <!--
             <div id="videoSearch" class="panel" style="display: none">
                 <table style="margin-top: 5px;">
                     <tr>
@@ -55,41 +55,17 @@
                 </table>
                 <div id="searchList"></div>
             </div>
-            -->
-            <div id="upload" class="panel" style="display: none">
-                <div id="upload_left">
-                    <div class="fieldset flash" id="fsUploadProgress"></div>
-                    <div class="controller">
-                        <span id="spanButtonPlaceHolder"></span>
-                        <!--<span id="video_format_advice"><var id="lang_format_advice"></var></span>-->
-                        <span id="startUpload" style="display: none;"></span>
-                    </div>
-                </div>
-                <div id="uploadVideoInfo">
-                    <fieldset>
-                        <legend><var id="lang_upload_size"></var></legend>
-                        <table>
-                            <tr><td><label><var id="lang_upload_width"></var></label></td><td><input class="txt" id="upload_width" type="text"/></td></tr>
-                            <tr><td><label><var id="lang_upload_height"></var></label></td><td><input class="txt" id="upload_height" type="text"/></td></tr>
-                        </table>
-                    </fieldset>
-                    <fieldset>
-                        <legend><var id="lang_upload_alignment"></var></legend>
-                        <div id="upload_alignment"></div>
-                    </fieldset>
-                </div>
-            </div>
         </div>
     </div>
 </div>
+<script type="text/javascript" src="../internal.js"></script>
 <script type="text/javascript" src="video.js"></script>
-
-<script type="text/javascript" src="../../third-party/swfupload/swfupload.js"></script>
-<script type="text/javascript" src="../../third-party/swfupload/swfupload.queue.js"></script>
-<script type="text/javascript" src="../../third-party/swfupload/fileprogress.js"></script>
-<script type="text/javascript" src="callbacks.js"></script>
 <script type="text/javascript">
-
+    window.onload = function(){
+        video.init();
+        $focus($G("videoUrl"));
+    };
 </script>
 </body>
 </html>
+

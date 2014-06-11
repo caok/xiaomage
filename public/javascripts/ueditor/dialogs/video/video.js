@@ -5,65 +5,26 @@
  * Time: 上午11:19
  * To change this template use File | Settings | File Templates.
  */
+var video = {};
+var global_width = 300, global_height = 200;  
+var preview_width = 548, preview_height = 280;  
 
 (function(){
-
-    editor.setOpt({
-        videoFieldName:"upfile"
-    });
-
-    var video = {},
-        uploadVideoList = [],
-        isModifyUploadVideo = false;
-
-    window.onload = function(){
-        $focus($G("videoUrl"));
-        initTabs();
-        initVideo();
-        initUpload();
-    };
-
-    /* 初始化tab标签 */
-    function initTabs(){
-        var tabs = $G('tabHeads').children;
-        for (var i = 0; i < tabs.length; i++) {
-            domUtils.on(tabs[i], "click", function (e) {
-                var target = e.target || e.srcElement;
-                for (var j = 0; j < tabs.length; j++) {
-                    if(tabs[j] == target){
-                        tabs[j].className = "focus";
-                        $G(tabs[j].getAttribute('data-content-id')).style.display = "block";
-                    }else {
-                        tabs[j].className = "";
-                        $G(tabs[j].getAttribute('data-content-id')).style.display = "none";
-                    }
-                }
-            });
-        }
-    }
-
-    function initVideo(){
-        createAlignButton( ["videoFloat", "upload_alignment"] );
+    video.init = function(){
+        switchTab("videoTab");
+        createAlignButton( ["videoFloat"] );
         addUrlChangeListener($G("videoUrl"));
         addOkListener();
+        addSearchListener();
 
         //编辑视频时初始化相关信息
         (function(){
             var img = editor.selection.getRange().getClosedNode(),url;
-            if(img && img.className){
-                var hasFakedClass = (img.className == "edui-faked-video"),
-                    hasUploadClass = img.className.indexOf("edui-upload-video")!=-1;
-                if(hasFakedClass || hasUploadClass) {
-                    $G("videoUrl").value = url = img.getAttribute("_url");
-                    $G("videoWidth").value = img.width;
-                    $G("videoHeight").value = img.height;
-                    var align = domUtils.getComputedStyle(img,"float"),
-                        parentAlign = domUtils.getComputedStyle(img.parentNode,"text-align");
-                    updateAlignButton(parentAlign==="center"?"center":align);
-                }
-                if(hasUploadClass) {
-                    isModifyUploadVideo = true;
-                }
+            if(img && img.className == "edui-faked-video"){
+                $G("videoUrl").value = url = img.getAttribute("_url");
+                $G("videoWidth").value = img.width;
+                $G("videoHeight").value = img.height;
+                updateAlignButton(img.getAttribute("align"));
             }
             createPreviewVideo(url);
         })();
@@ -81,9 +42,6 @@
                     break;
                 case "videoSearch":
                     return insertSearch("searchList");
-                    break;
-                case "upload":
-                    return insertUpload();
                     break;
             }
         };
@@ -120,6 +78,17 @@
         }
     }
 
+    function exec_cmd_cb(url, arg_obj){
+      arg_obj['url'] = url;
+       editor.execCommand('insertvideo', {
+          url: url,
+          width: arg_obj['width'],
+          height: arg_obj['height'],
+          align: arg_obj['align'],
+          vid: arg_obj['vid']
+        });
+    }
+
     /**
      * 将单个视频信息插入编辑器中
      */
@@ -130,12 +99,14 @@
             align = findFocus("videoFloat","name");
         if(!url) return false;
         if ( !checkNum( [width, height] ) ) return false;
-        editor.execCommand('insertvideo', {
-            url: convert_url(url),
+
+        global_width = width.value;
+        global_height = height.value;
+        convert_url( url, exec_cmd_cb, {
             width: width.value,
             height: height.value,
-            align: align
-        }, isModifyUploadVideo ? 'upload':null);
+            align: align}
+) ;
     }
 
     /**
@@ -174,13 +145,141 @@
         }
         return property;
     }
-    function convert_url(s){
-        return s.replace(/http:\/\/www\.tudou\.com\/programs\/view\/([\w\-]+)\/?/i,"http://www.tudou.com/v/$1")
-            .replace(/http:\/\/www\.youtube\.com\/watch\?v=([\w\-]+)/i,"http://www.youtube.com/v/$1")
-            .replace(/http:\/\/v\.youku\.com\/v_show\/id_([\w\-=]+)\.html/i,"http://player.youku.com/player.php/sid/$1")
-            .replace(/http:\/\/www\.56\.com\/u\d+\/v_([\w\-]+)\.html/i, "http://player.56.com/v_$1.swf")
-            .replace(/http:\/\/www.56.com\/w\d+\/play_album\-aid\-\d+_vid\-([^.]+)\.html/i, "http://player.56.com/v_$1.swf")
-            .replace(/http:\/\/v\.ku6\.com\/.+\/([^.]+)\.html/i, "http://player.ku6.com/refer/$1/v.swf");
+
+    //这一段是腾讯视频给的把url转成vid
+    function getVidFromUrl(url) {
+      url = url || window.location.toString();
+      //先从url中分析出vid参数，例如×××××.html?vid=××××××
+      var vid = getUrlParam("vid", url),
+        r;
+      if (!vid) { // 使用新规则生成的专辑单视频页面
+        if (r = url.match(/\/\w{15}\/(\w+)\.html/)) {
+          vid = r[1];
+        }
+      }
+      // 单视频播放页
+      if (!vid) {
+        if (r = url.match(/\/page\/\w{1}\/\w{1}\/\w{1}\/(\w+)\.html/)) {
+          vid = r[1];
+        } else if (r = url.match(/\/(page|play)\/+(\w{11})\.html/)) {
+          vid = r[2];
+        }
+      }
+      // 播客专辑播放页
+      if (!vid) {
+        if (r = url.match(/\/boke\/gplay\/\w+_\w+_(\w+)\.html/)) {
+          vid = r[1];
+        }
+      }
+      return encodeURIComponent(vid);
+    }
+
+    function getUrlParam(p, u) {
+      var u = u || document.location.toString();
+      var pa = p + "=";
+      var f = u.indexOf(pa);
+      if (f != -1) {
+        var f2 = u.indexOf("&", f);
+        var f2p = u.indexOf("?", f);
+        if (f2p != -1 && (f2 == -1 || f2 > f2p))
+          f2 = f2p;
+        f2p = u.indexOf("#", f);
+        if (f2p != -1 && (f2 == -1 || f2 > f2p))
+          f2 = f2p;
+        if (f2 == -1)
+          return u.substring(f + pa.length);
+        else
+          return u.substring(f + pa.length, f2);
+      }
+      return "";
+    }
+
+    //关于腾讯视频 有问题请找popotang
+    function handleTencentVideo( link, callback, arg_obj ){
+      var vid = "", r, flashvars = "", return_url, width = arg_obj['width'], height = arg_obj['height'];
+      //with vid in url query str
+      if( r = link.match( new RegExp("(^|&|\\\\?)vid=([^&]*)(&|$|#)") )) {
+        vid = encodeURIComponent(r[2]);
+        arg_obj["vid"] = vid;
+        return_url =  'http://v.qq.com/iframe/player.html?vid=' + vid + '&width=' + width + '&height=' + height + '&auto=0';
+        callback( return_url, arg_obj );
+      }
+      //with cid in url
+      //如果有连续剧的视频。需要jsonp去腾讯视频后台用cid换取一段json，然后取连续剧的第一集开始播放
+      else if( r = link.match( new RegExp("(http://)?v\\.qq\\.com/cover[^/]*/\\w+/([^/]*)\\.html") ) )
+      {
+        var cid = encodeURIComponent(r[2]), path = 'http://sns.video.qq.com/fcgi-bin/dlib/dataout_ex?auto_id=137&cid=' + cid + '&otype=json'; 
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = path;
+        script.async = true;
+
+        if(script.onreadystatechange !== undefined){//ie
+          script.onreadystatechange = function(){
+            if(script.readyState == 'loaded'){
+              try{
+                vid = QZOutputJson['videos'][0]['vid'];
+                arg_obj["vid"] = vid;
+                return_url =  'http://v.qq.com/iframe/player.html?vid=' + vid + '&width=' + width + '&height=' + height + '&auto=0';
+                callback( return_url, arg_obj );
+              }catch(err){
+              }
+            }
+          }
+        }else{//others
+          script.onload = function(){
+            try{
+              vid = QZOutputJson['videos'][0]['vid'];
+              arg_obj["vid"] = vid;
+              return_url =  'http://v.qq.com/iframe/player.html?vid=' + vid + '&width=' + width + '&height=' + height + '&auto=0';
+              callback( return_url, arg_obj );
+            }catch(err){
+            }
+          };       
+        }
+
+
+        head.appendChild(script);
+      }
+      //with vid in url
+      //这里用腾讯视频给的逻辑来做
+      else{
+        vid = getVidFromUrl(link);
+        if (vid != ""){
+          arg_obj["vid"] = vid;
+          return_url =  'http://v.qq.com/iframe/player.html?vid=' + vid + '&width=' + width + '&height=' + height + '&auto=0';
+          callback( return_url, arg_obj );
+        }
+
+      }
+      /*
+      else if( r = link.match( new RegExp("(http://)?v\\.qq\\.com/(.*)/(.*)\\.html")))
+      {
+        vid = encodeURIComponent(r[3]);
+        return_url =  'http://v.qq.com/iframe/player.html?vid=' + vid + '&width=' + width + '&height=' + height + '&auto=0';
+        callback( return_url, arg_obj );
+      }
+      */
+    }
+
+    function convert_url( url, callback, arg_obj ){
+        url = url.replace(/^\s+|\s+$/g, '');
+    url = url.replace(/^v\.qq\.com/,'http://v.qq.com');
+        var result_url = url;
+        if( url.indexOf('http://v.qq.com') != -1 )
+        {
+            handleTencentVideo(url, callback, arg_obj );
+        }
+        /*
+        else
+        {
+            return_url = url.replace(/http:\/\/www\.youku\.com\/watch\?v=([\w\-]+)/i, "http://player.youku.com/embed/$1")
+            .replace(/http:\/\/v\.youku\.com\/v_show\/id_([\w\-]+)\.html/i, "http://player.youku.com/embed/$1");
+            callback( return_url, arg_obj );
+        }
+        */
+
     }
 
     /**
@@ -208,6 +307,47 @@
         return /(0|^[1-9]\d*$)/.test( value );
     }
 
+    /**
+     * tab切换
+     * @param tabParentId
+     * @param keepFocus   当此值为真时，切换按钮上会保留focus的样式
+     */
+    function switchTab( tabParentId,keepFocus ) {
+        var tabElements = $G( tabParentId ).children,
+                tabHeads = tabElements[0].children,
+                tabBodys = tabElements[1].children;
+        for ( var i = 0, length = tabHeads.length; i < length; i++ ) {
+            var head = tabHeads[i];
+            if( head.getAttribute("canclick") === "0" )
+              continue;
+            domUtils.on( head, "click", function () {
+                //head样式更改
+                for ( var k = 0, len = tabHeads.length; k < len; k++ ) {
+                    if(!keepFocus)tabHeads[k].className = "";
+                }
+                this.className = "focus";
+                //body显隐
+                var tabSrc = this.getAttribute( "tabSrc" );
+                for ( var j = 0, length = tabBodys.length; j < length; j++ ) {
+                    var body = tabBodys[j],
+                        id = body.getAttribute( "id" );
+
+                    if ( id == tabSrc ) {
+                        body.style.display = "";
+                        if(id=="videoSearch"){
+                            selectTxt($G("videoSearchTxt"));
+                        }
+                        if(id=="video"){
+                            selectTxt($G("videoUrl"));
+                        }
+
+                    } else {
+                        body.style.display = "none";
+                    }
+                }
+            } );
+        }
+    }
     /**
       * 创建图片浮动选择按钮
       * @param ids
@@ -250,6 +390,7 @@
      * @param url
      */
     function addUrlChangeListener(url){
+        //console.log('url change %s', url);
         if (browser.ie) {
             url.onpropertychange = function () {
                 createPreviewVideo( this.value );
@@ -261,6 +402,9 @@
         }
     }
 
+    function createPreviewVideoCallback(url){
+      $G("preview").innerHTML = '<iframe height=' + preview_height + ' width=' + preview_width + ' frameborder=0 src="' + url + '" allowfullscreen></iframe>';
+    }
     /**
      * 根据url生成视频预览
      * @param url
@@ -268,26 +412,26 @@
     function createPreviewVideo(url){
 
         if ( !url )return;
-		var matches = url.match(/youtu.be\/(\w+)$/) || url.match(/youtube\.com\/watch\?v=(\w+)/) || url.match(/youtube.com\/v\/(\w+)/),
-            youku = url.match(/youku\.com\/v_show\/id_(\w+)/),
-            youkuPlay = /player\.youku\.com/ig.test(url);
-        if(!youkuPlay){
-            if (matches){
-                url = "https://www.youtube.com/v/" + matches[1] + "?version=3&feature=player_embedded";
-            }else if(youku){
-                url = "http://player.youku.com/player.php/sid/"+youku[1]+"/v.swf"
-            }else if(!endWith(url,[".swf",".flv",".wmv"])){
-                $G("preview").innerHTML = lang.urlError;
-                return;
-            }
-        }else{
-            url = url.replace(/\?f=.*/,"");
+          /*
+    var matches = url.match(/youtu.be\/(\w+)$/) || url.match(/youtube\.com\/watch\?v=(\w+)/) || url.match(/youtube.com\/v\/(\w+)/),
+            youku = url.match(/youku\.com\/v_show\/id_(\w+)/);
+    if (matches){
+      url = "https://www.youtube.com/v/" + matches[1] + "?version=3&feature=player_embedded";
+    }else if(youku){
+            url = "http://player.youku.com/player.php/sid/"+youku[1]+"/v.swf"
+        }else if(!endWith(url,[".swf",".flv",".wmv"])){
+            $G("preview").innerHTML = lang.urlError;
+            return;
         }
+        */
+        convert_url(url, createPreviewVideoCallback, {width: preview_width, height: preview_height});
+        /*
         $G("preview").innerHTML = '<embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
         ' src="' + url + '"' +
         ' width="' + 420  + '"' +
         ' height="' + 280  + '"' +
         ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" ></embed>';
+        */
     }
 
     /**
@@ -370,102 +514,33 @@
         }
     }
 
-
-    /* 插入上传视频 */
-    function insertUpload(){
-        var videoObjs=[],
-            uploadDir = editor.options.videoPath,
-            width = $G('upload_width').value || 420,
-            height = $G('upload_height').value || 280,
-            align = findFocus("upload_alignment","name") || 'none';
-        for(var key in uploadVideoList) {
-            var file = uploadVideoList[key];
-            videoObjs.push({
-                url: uploadDir + file.url,
-                width:width,
-                height:height,
-                align:align
-            });
-        }
-        editor.execCommand('insertvideo', videoObjs, 'upload');
-    }
-
-    /*初始化上传标签*/
-    function initUpload(){
-        var settings = {
-            upload_url:editor.options.videoUrl,           //附件上传服务器地址
-            file_post_name:editor.options.videoFieldName,      //向后台提交的表单名
-            flash_url:"../../third-party/swfupload/swfupload.swf",
-            flash9_url:"../../third-party/swfupload/swfupload_fp9.swf",
-            post_params:{"PHPSESSID":"<?php echo session_id(); ?>","fileNameFormat":editor.options.fileNameFormat}, //解决session丢失问题
-            file_size_limit:"100 MB",                                 //文件大小限制，此处仅是前端flash选择时候的限制，具体还需要和后端结合判断
-            file_types:"*.*",                                         //允许的扩展名，多个扩展名之间用分号隔开，支持*通配符
-            file_types_description:"Video Files",                      //扩展名描述
-            file_upload_limit:100,                                   //单次可同时上传的文件数目
-            file_queue_limit:10,                                      //队列中可同时上传的文件数目
-            custom_settings:{                                         //自定义设置，用户可在此向服务器传递自定义变量
-                progressTarget:"fsUploadProgress",
-                startUploadId:"startUpload"
-            },
-            debug:false,
-
-            // 按钮设置
-            button_image_url:"../../themes/default/images/filescan.png",
-            button_width:"100",
-            button_height:"25",
-            button_placeholder_id:"spanButtonPlaceHolder",
-            button_text:'<span class="theFont">'+lang.browseFiles+'</span>',
-            button_text_style:".theFont { font-size:14px;}",
-            button_text_left_padding:10,
-            button_text_top_padding:4,
-            // 所有回调函数
-            swfupload_preload_handler:preLoad,
-            swfupload_load_failed_handler:loadFailed,
-            file_queued_handler:fileQueued,
-            file_queue_error_handler:fileQueueError,
-            //选择文件完成回调
-            file_dialog_complete_handler:function(numFilesSelected, numFilesQueued) {
-                var me = this;        //此处的this是swfupload对象
-                if (numFilesQueued > 0) {
-                    dialog.buttons[0].setDisabled(true);
-                    var start = $G(this.customSettings.startUploadId);
-                    start.style.display = "";
-                    start.onclick = function(){
-                        me.startUpload();
-                        start.style.display = "none";
-                    }
-                }
-            },
-            upload_start_handler:uploadStart,
-            upload_progress_handler:uploadProgress,
-            upload_error_handler:uploadError,
-            upload_success_handler:function (file, serverData) {
-                try{
-                    var info = eval("("+serverData+")");
-                }catch(e){}
-                var progress = new FileProgress(file, this.customSettings.progressTarget);
-                if(info.state=="SUCCESS"){
-                    progress.setComplete();
-                    progress.setStatus("<span style='color: #0b0;font-weight: bold'>"+lang.uploadSuccess+"</span>");
-                    uploadVideoList.push({url:info.url,type:info.fileType,original:info.original});
-                    progress.toggleCancel(true,this,lang.delSuccessFile);
-                }else{
-                    progress.setError();
-                    progress.setStatus(info.state);
-                    progress.toggleCancel(true,this,lang.delFailSaveFile);
-                }
-            },
-            //上传完成回调
-            upload_complete_handler:uploadComplete,
-            //队列完成回调
-            queue_complete_handler:function(numFilesUploaded){
-                dialog.buttons[0].setDisabled(false);
-//                var status = $G("divStatus");
-//                var num = status.innerHTML.match(/\d+/g);
-//                status.innerHTML = ((num && num[0] ?parseInt(num[0]):0) + numFilesUploaded) +lang.statusPrompt;
+    /**
+     * 视频搜索相关注册事件
+     */
+    function addSearchListener(){
+        domUtils.on($G("videoSearchBtn"),"click",getMovie);
+        domUtils.on($G( "videoSearchTxt" ),"click",function () {
+            if ( this.value == lang.static.videoSearchTxt.value ) {
+                this.value = "";
             }
+            this.setAttribute("hasClick","true");
+            selectTxt(this);
+        });
+        $G( "videoSearchTxt" ).onkeyup = function(){
+            this.setAttribute("hasClick","true");
+            this.onkeyup = null;
         };
-        var swfupload = new SWFUpload( settings );
-    };
-
+        domUtils.on($G( "videoSearchReset" ),"click",function () {
+            var txt = $G( "videoSearchTxt" );
+            txt.value = "";
+            selectTxt(txt);
+            $G( "searchList" ).innerHTML = "";
+        });
+        domUtils.on($G( "videoType" ),"change", getMovie);
+        domUtils.on($G( "videoSearchTxt" ), "keyup", function ( evt ) {
+            if ( evt.keyCode == 13 ) {
+                getMovie();
+            }
+        } )
+    }
 })();

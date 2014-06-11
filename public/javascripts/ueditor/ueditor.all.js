@@ -3250,6 +3250,7 @@ var domUtils = dom.domUtils = {
      *     //output: cl1 cls2 cls3 cls4
      *     console.log( testNode.className );
      *
+
      * <script>
      * ```
      */
@@ -6519,6 +6520,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         me.shortcutkeys = {};
         me.inputRules = [];
         me.outputRules = [];
+        // for mp.weixin.qq.com
         //设置默认的常用属性
         me.setOpt({
             isShow: true,
@@ -6546,6 +6548,33 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             autoSyncData : true,
             fileNameFormat: '{time}{rand:6}'
         });
+        /*me.setOpt( {
+            isShow:true,
+            initialContent:'',
+			initialStyle:'',
+            autoClearinitialContent:false,
+            iframeCssUrl:me.options.UEDITOR_HOME_URL + 'themes/iframe.css',
+            textarea:'editorValue',
+            focus:false,
+            minFrameWidth:800,
+            minFrameHeight:220,
+            autoClearEmptyNode:true,
+            fullscreen:false,
+            readonly:false,
+            zIndex:999,
+            imagePopup:true,
+            enterTag:'p',
+            pageBreakTag:'_baidu_page_break_tag_',
+            customDomain:false,
+            lang:'zh-cn',
+            langPath:me.options.UEDITOR_HOME_URL + 'lang/',
+            theme:'default',
+            themePath:me.options.UEDITOR_HOME_URL + 'themes/',
+            allHtmlEnabled:false,
+            scaleEnabled:false,
+            tableNativeEditInFF:false
+        } );*/
+        // end mp.weixin.qq.com
 
         if(!utils.isEmptyObject(UE.I18N)){
             //修改默认的语言类型
@@ -6688,6 +6717,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 container = document.getElementById(container);
             }
             if (container) {
+
                 if(options.initialFrameWidth){
                     options.minFrameWidth = options.initialFrameWidth
                 }else{
@@ -16609,7 +16639,7 @@ UE.plugins['video'] = function (){
      * @param toEmbed 是否以flash代替显示
      * @param addParagraph  是否需要添加P 标签
      */
-    function creatInsertStr(url,width,height,id,align,classname,type){
+    /*function creatInsertStr(url,width,height,id,align,classname,type){
         var str;
         switch (type){
             case 'image':
@@ -16630,6 +16660,21 @@ UE.plugins['video'] = function (){
                 break;
         }
         return str;
+    }*/
+    function creatInsertStr(url,width,height,align,toEmbed,addParagraph){
+        return  !toEmbed ?
+                (addParagraph? ('<p '+ (align !="none" ? ( align == "center"? ' style="text-align:center;" ':' style="float:"'+ align ) : '') + '>'): '') +
+                '<img align="'+align+'" width="'+ width +'" height="' + height + '" _url="'+url+'" class="edui-faked-video"' +
+                ' src="'+me.options.UEDITOR_HOME_URL+'themes/default/images/spacer.gif" style="background:url('+me.options.UEDITOR_HOME_URL+'themes/default/images/videologo.gif) no-repeat center center; border:1px solid gray;" />' +
+                (addParagraph?'</p>':'')
+                :
+                '<iframe style="position:relative; z-index:1;" height=' + height + ' width=' + width + ' frameborder=0 src="' + url + '" allowfullscreen></iframe><br/>';
+                /*
+                '<embed type="application/x-shockwave-flash" class="edui-faked-video" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
+                ' src="' + url + '" width="' + width  + '" height="' + height  + '" align="' + align + '"' +
+                ( align !="none" ? ' style= "'+ ( align == "center"? "display:block;":" float: "+ align )  + '"' :'' ) +
+                ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" >';
+                */
     }
 
     function switchImgAndVideo(root,img2video){
@@ -16726,16 +16771,21 @@ UE.plugins['video'] = function (){
             for(var i=0,vi,len = videoObjs.length;i<len;i++){
                 vi = videoObjs[i];
                 cl = (type == 'upload' ? 'edui-upload-video video-js vjs-default-skin':'edui-faked-video');
-                html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, null, cl, 'image'));
+                // for mp.weixin.qq.com
+                // html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, null, cl, 'image'));
+                html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, vi.align||"none",true,true));
+				// end mp.weixin.qq.com
             }
             me.execCommand("inserthtml",html.join(""),true);
-            var rng = this.selection.getRange();
+            // for mp.weixin.qq.com
+            /*var rng = this.selection.getRange();
             for(var i= 0,len=videoObjs.length;i<len;i++){
                 var img = this.document.getElementById('tmpVedio'+i);
                 domUtils.removeAttributes(img,'id');
                 rng.selectNode(img).select();
                 me.execCommand('imagefloat',videoObjs[i].align)
-            }
+            }*/
+            // end mp.weixin.qq.com
         },
         queryCommandState : function(){
             var img = me.selection.getRange().getClosedNode(),
@@ -20514,6 +20564,7 @@ UE.plugins['table'] = function () {
                 tbody = me.document.createElement("tbody"),
                 trow = me.document.createElement("tr"),
                 tabcell = me.document.createElement("td"),
+
                 mirror = null;
 
             tabcell.style.cssText = 'border: 0;';

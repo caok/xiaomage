@@ -27,18 +27,18 @@
           <th>标题</th>
           <th>地址</th>
           <th>开始时间</th>
-          <th>结束时间</th>
+          <th>封面</th>
           <th>操作</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="activity in activities">
-          <td>{{$index + 1}}</td>
-          <td>{{activity.title}}</td>
-          <td>{{activity.adr}}</td>
-          <td>{{activity.startAt | date:"yyyy-MM-dd HH:mm"}}</td>
-          <td>{{activity.endAt | date:"yyyy-MM-dd HH:mm"}}</td>
-          <td>
+          <td class='center'>{{$index + 1}}</td>
+          <td class='center'>{{activity.title}}</td>
+          <td class='center'>{{activity.adr}}</td>
+          <td class='center'>{{activity.startAt | date:"yyyy-MM-dd HH:mm"}}</td>
+          <td><img src="{{activity.cover}}" alt=""></td>
+          <td class='center-actions'>
             <a href="#/activities/{{activity.id}}" class="btn btn-warning btn-xs">
               <span class="glyphicon glyphicon-edit"></span>编辑
             </a>

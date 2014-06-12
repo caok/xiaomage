@@ -8,17 +8,30 @@
   </head>
   <body>
     <div id='notice'>
-      <div class="abstract">
-        <%= obj.abstract %>
-      </div>
       <p class="title"><%=obj.title %></p>
       <p class="date">
         <%= obj.time %>
       </p>
+      <div class="abstract">
+        <%= obj.abstract %>
+      </div>
       <div class="info">
-        <img src="<%= obj.cover %>" alt="">
         <%- obj.detail %>
       </div>
+      <% if (obj.ad.length > 0){ %>
+        <div class="me">
+          <table>
+           <tr style="width: 100%">
+            <td style="width:33%"><hr></td>
+            <td style="width:34%; text-align:center">广告时间</td>
+            <td style="width:33%"><hr></td>
+           </tr>
+          </table>
+          <div class="info">
+            <%- obj.ad %>
+          </div>
+        </div>
+      <% }%>
       <div class="me">
         <table>
          <tr style="width: 100%">

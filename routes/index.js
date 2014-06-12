@@ -530,8 +530,8 @@ module.exports = function(app){
 
   app.get('/admin/login', function(req, res){
     if(req.params.new === 'true'){
-    if(req.session.admin)
-      delete req.session.admin;
+      if(req.session.admin)
+        delete req.session.admin;
     }
     if(req.session.admin)
       return res.redirect('/admin');
@@ -567,6 +567,12 @@ module.exports = function(app){
     })
   });
 
+  app.get('/admin/logout', function(req, res){
+    if(req.session.admin)
+      delete req.session.admin;
+    return res.redirect('/admin/login');
+  });
+
   app.get('/partials/:name', function(req, res){
     if(!req.session.admin){
       res.redirect('/admin/login');
@@ -578,7 +584,8 @@ module.exports = function(app){
   // 趣文
   app.get('/admin/article', function(req, res){
     console.log("article index");
-    db.select('id, title, time, abstract')
+    db.select('id, title, time, abstract, cover')
+      .order_by('id desc')
       .get('article',function(err, article, fields){
       if(err){
         console.log(err);
@@ -605,6 +612,7 @@ module.exports = function(app){
       cover:req.body.cover,
       abstract: req.body.abstract,
       detail:req.body.detail,
+      ad:req.body.ad,
       time:getDateTime(new Date())
     }
     db.insert('article', article, function(err, article){
@@ -622,6 +630,7 @@ module.exports = function(app){
       title:req.body.title,
       cover:req.body.cover,
       detail:req.body.detail,
+      ad:req.body.ad,
       abstract: req.body.abstract
     }
     db.where({id: req.params.id}).update('article', article, function(err) {
@@ -648,7 +657,8 @@ module.exports = function(app){
   // 捣江湖
   app.get('/admin/dao', function(req, res){
     console.log("dao index");
-    db.select('id, title, time, abstract')
+    db.select('id, title, time, abstract, cover')
+      .order_by('id desc')
       .get('dao',function(err, dao, fields){
       if(err){
         console.log(err);
@@ -675,6 +685,7 @@ module.exports = function(app){
       cover:req.body.cover,
       abstract: req.body.abstract,
       detail:req.body.detail,
+      ad:req.body.ad,
       time:getDateTime(new Date())
     }
     db.insert('dao', dao, function(err, dao){
@@ -693,6 +704,7 @@ module.exports = function(app){
       title:req.body.title,
       cover:req.body.cover,
       detail:req.body.detail,
+      ad:req.body.ad,
       abstract: req.body.abstract
     }
     db.where({id: req.params.id}).update('dao', dao, function(err) {
@@ -719,7 +731,8 @@ module.exports = function(app){
   // 毫稍来看
   app.get('/admin/hao', function(req, res){
     console.log("hao index");
-    db.select('id, title, time, abstract')
+    db.select('id, title, time, abstract, cover')
+      .order_by('id desc')
       .get('hao',function(err, hao, fields){
       if(err){
         console.log(err);
@@ -746,6 +759,7 @@ module.exports = function(app){
       cover:req.body.cover,
       abstract: req.body.abstract,
       detail:req.body.detail,
+      ad:req.body.ad,
       time:getDateTime(new Date())
     }
     db.insert('hao', hao, function(err, hao){
@@ -764,6 +778,7 @@ module.exports = function(app){
       title:req.body.title,
       cover:req.body.cover,
       detail:req.body.detail,
+      ad:req.body.ad,
       abstract: req.body.abstract
     }
     db.where({id: req.params.id}).update('hao', hao, function(err) {
@@ -790,7 +805,8 @@ module.exports = function(app){
   // DayDay Up
   app.get('/admin/day', function(req, res){
     console.log("day index");
-    db.select('id, title, time, abstract')
+    db.select('id, title, time, abstract, cover')
+      .order_by('id desc')
       .get('day',function(err, day, fields){
       if(err){
         console.log(err);
@@ -811,12 +827,12 @@ module.exports = function(app){
   });
   app.post('/admin/day', function(req, res){
     console.log("day create");
-    console.log(req.body.detail);
     var day = {
       title:req.body.title,
       cover:req.body.cover,
       abstract: req.body.abstract,
       detail:req.body.detail,
+      ad:req.body.ad,
       time:getDateTime(new Date())
     }
     db.insert('day', day, function(err, day){
@@ -835,6 +851,7 @@ module.exports = function(app){
       title:req.body.title,
       cover:req.body.cover,
       detail:req.body.detail,
+      ad:req.body.ad,
       abstract: req.body.abstract
     }
     db.where({id: req.params.id}).update('day', day, function(err) {
@@ -861,7 +878,8 @@ module.exports = function(app){
   // 活动
   app.get('/admin/activities', function(req, res){
     console.log("activitys index");
-    db.get('activity',function(err, activities, fields){
+    db.order_by('id desc')
+      .get('activity',function(err, activities, fields){
       if(err){
         console.log(err);
       }else{
@@ -883,12 +901,10 @@ module.exports = function(app){
     console.log("activitys create:", req.body.detail);
     var activity = {
       title   : req.body.title,
-      entitle : req.body.entitle,
       cover   : req.body.cover,
       adr     : req.body.adr,
-      enadr   : req.body.enadr,
       startAt : req.body.startAt,
-      endAt   : req.body.endAt,
+      ad      : req.body.ad,
       detail  : req.body.detail
     }
     db.insert('activity', activity, function(err, activity){
@@ -903,12 +919,10 @@ module.exports = function(app){
   app.post('/admin/activities/:id', function(req, res){
     var activity = {
       title   : req.body.title,
-      entitle : req.body.entitle,
       cover   : req.body.cover,
       adr     : req.body.adr,
-      enadr   : req.body.enadr,
       startAt : req.body.startAt,
-      endAt   : req.body.endAt,
+      ad      : req.body.ad,
       detail  : req.body.detail
     }
     db.where({id: req.params.id}).update('activity', activity, function(err) {
@@ -935,7 +949,8 @@ module.exports = function(app){
   // 招兵买马
   app.get('/admin/zhao', function(req, res){
     console.log("zhao index");
-    db.select('id, title, time, abstract')
+    db.select('id, title, time, abstract, cover')
+      .order_by('id desc')
       .get('zhao',function(err, zhao, fields){
       if(err){
         console.log(err);
@@ -962,6 +977,7 @@ module.exports = function(app){
       cover:req.body.cover,
       abstract: req.body.abstract,
       detail:req.body.detail,
+      ad:req.body.ad,
       time:getDateTime(new Date())
     }
     db.insert('zhao', zhao, function(err, zhao){
@@ -980,6 +996,7 @@ module.exports = function(app){
       title:req.body.title,
       cover:req.body.cover,
       detail:req.body.detail,
+      ad:req.body.ad,
       abstract: req.body.abstract
     }
     db.where({id: req.params.id}).update('zhao', zhao, function(err) {
@@ -1006,7 +1023,8 @@ module.exports = function(app){
   // 求之若渴
   app.get('/admin/qiu', function(req, res){
     console.log("qiu index");
-    db.select('id, title, time, abstract')
+    db.select('id, title, time, abstract, cover')
+      .order_by('id desc')
       .get('qiu',function(err, qiu, fields){
       if(err){
         console.log(err);
@@ -1032,6 +1050,7 @@ module.exports = function(app){
       title:req.body.title,
       cover:req.body.cover,
       abstract: req.body.abstract,
+      ad:req.body.ad,
       detail:req.body.detail,
       time:getDateTime(new Date())
     }
@@ -1051,6 +1070,7 @@ module.exports = function(app){
       title:req.body.title,
       cover:req.body.cover,
       detail:req.body.detail,
+      ad:req.body.ad,
       abstract: req.body.abstract
     }
     db.where({id: req.params.id}).update('qiu', qiu, function(err) {

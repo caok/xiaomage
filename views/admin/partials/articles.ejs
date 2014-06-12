@@ -27,16 +27,18 @@
           <th>标题</th>
           <th>时间</th>
           <th>摘要</th>
+          <th>封面</th>
           <th>操作</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="article in articles">
-          <td>{{$index + 1}}</td>
-          <td>{{article.title}}</td>
-          <td>{{article.time | date:"yyyy-MM-dd HH:mm"}}</td>
-          <td>{{article.abstract | truncate}}</td>
-          <td>
+          <td class='center'>{{$index + 1}}</td>
+          <td class='center'>{{article.title}}</td>
+          <td class='center'>{{article.time | date:"yyyy-MM-dd HH:mm"}}</td>
+          <td class='center'>{{article.abstract | truncate}}</td>
+          <td><img src="{{article.cover}}" alt=""></td>
+          <td class='center-actions'>
             <a href="#/articles/{{article.id}}" class="btn btn-warning btn-xs">
               <span class="glyphicon glyphicon-edit"></span>编辑
             </a>

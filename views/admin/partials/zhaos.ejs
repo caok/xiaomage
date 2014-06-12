@@ -32,11 +32,12 @@
       </thead>
       <tbody>
         <tr ng-repeat="zhao in zhaos">
-          <td>{{$index + 1}}</td>
-          <td>{{zhao.title}}</td>
-          <td>{{zhao.time | date:"yyyy-MM-dd HH:mm"}}</td>
-          <td>{{zhao.abstract | truncate}}</td>
-          <td>
+          <td class='center'>{{$index + 1}}</td>
+          <td class='center'>{{zhao.title}}</td>
+          <td class='center'>{{zhao.time | date:"yyyy-MM-dd HH:mm"}}</td>
+          <td class='center'>{{zhao.abstract | truncate}}</td>
+          <td><img src="{{zhao.cover}}" alt=""></td>
+          <td class='center-actions'>
             <a href="#/zhaos/{{zhao.id}}" class="btn btn-warning btn-xs">
               <span class="glyphicon glyphicon-edit"></span>编辑
             </a>

@@ -32,11 +32,12 @@
       </thead>
       <tbody>
         <tr ng-repeat="dao in daos">
-          <td>{{$index + 1}}</td>
-          <td>{{dao.title}}</td>
-          <td>{{dao.time | date:"yyyy-MM-dd HH:mm"}}</td>
-          <td>{{dao.abstract | truncate}}</td>
-          <td>
+          <td class='center'>{{$index + 1}}</td>
+          <td class='center'>{{dao.title}}</td>
+          <td class='center'>{{dao.time | date:"yyyy-MM-dd HH:mm"}}</td>
+          <td class='center'>{{dao.abstract | truncate}}</td>
+          <td><img src="{{dao.cover}}" alt=""></td>
+          <td class='center-actions'>
             <a href="#/daos/{{dao.id}}" class="btn btn-warning btn-xs">
               <span class="glyphicon glyphicon-edit"></span>编辑
             </a>

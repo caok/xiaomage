@@ -19,42 +19,51 @@
     </ul>
   </div>
 </div>
-<div class="row-fluid">
+<div class="form-horizontal">
   <div class="control-group">
-    <label class="control-label">标题</label>
+    <label class="control-label">标题: </label>
     <div class="controls">
       <input type="text" class="m-wrap large" ng-model='obj.title' required />
     </div>
   </div>
 
   <div class="control-group">
-    <label class="col-sm-2 control-label">封面: </label>
-    <div class="col-sm-10">
-      <span class="help-block">建议尺寸: 360*200px</span>
+    <label class="control-label">封面: </label>
+    <div class="controls">
+      <span class="help-block">建议尺寸: 200*200px</span>
       <img class="middle" ng-src="{{obj.cover}}">
     </div>
   </div>
   <div class="control-group">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="controls">
       <span class="btn blue fileinput-button">
         <i class="icon-plus"></i>
-        <span>上传图片</span>
+        <span>替换图片</span>
         <input id="imgupload" type="file" fileupload name="files" data-url="/upload" done="uploadFinished(e, data, 'cover')">
       </span>
     </div>
   </div>
 
-  <div class="control-group">
-    <label class="control-label">摘要</label>
+  <div class="control-group" ng-class="{'error': obj.abstract.length > 39}">
+    <label class="control-label">摘要: </label>
     <div class="controls">
       <textarea class="large m-wrap" rows="6" ng-model='obj.abstract' required></textarea>
+      <span class="help-inline">建议字数40以内</span>
     </div>
   </div>
 
   <div class="control-group">
-    <label class="control-label">内容</label>
+    <label class="control-label">内容: </label>
     <div class="controls">
       <script id="editor" type="text/plain" style="width:945px;height:500px;">
+      </script>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">广告: </label>
+    <div class="controls">
+      <script id="adeditor" type="text/plain" style="width:945px;height:500px;">
       </script>
     </div>
   </div>

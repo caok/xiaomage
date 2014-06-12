@@ -9,6 +9,7 @@ function MainCtrl($route, $routeParams, $location) {
 
 var acteditor = false;
 var editor = false;
+var adeditor = false;
 
 angular.module('myApp.controllers', [])
   .controller('indexCtrl', ['$scope', '$location', '$routeParams', function($scope, $location, $routeParams) {
@@ -17,7 +18,7 @@ angular.module('myApp.controllers', [])
     if ($routeParams.id) {
       if ($routeParams.id === "new"){
         // 创建
-        $scope.obj = {title:"", detail:"", abstract:"", cover:""};
+        $scope.obj = {title:"", detail:"", abstract:"", cover:"", ad:""};
         $scope.submit = function(){
           Article.save({}, $scope.obj, function(res){
             if (res.result === 'success'){
@@ -38,6 +39,21 @@ angular.module('myApp.controllers', [])
             editor.addListener('contentChange', function() {
               $scope.$apply(function () {
                 $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
+        if (adeditor){
+          UE.getEditor('adeditor').destroy();
+        }
+        adeditor = UE.getEditor('adeditor');
+        if (adeditor){
+          adeditor.addListener( 'ready', function() {
+            adeditor.setContent($scope.obj.ad, true);
+            adeditor.focus();
+            adeditor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.ad = adeditor.getContent();
               });
             });
           });
@@ -66,6 +82,21 @@ angular.module('myApp.controllers', [])
               editor.addListener('contentChange', function() {
                 $scope.$apply(function () {
                   $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
+          if (adeditor){
+            UE.getEditor('adeditor').destroy();
+          }
+          adeditor = UE.getEditor('adeditor');
+          if (adeditor){
+            adeditor.addListener( 'ready', function() {
+              adeditor.setContent($scope.obj.ad, true);
+              adeditor.focus();
+              adeditor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.ad = adeditor.getContent();
                 });
               });
             });
@@ -103,7 +134,7 @@ angular.module('myApp.controllers', [])
     if ($routeParams.id) {
       if ($routeParams.id === "new"){
         // 创建
-        $scope.obj = {title:"", detail:"", abstract:"", cover:""};
+        $scope.obj = {title:"", detail:"", abstract:"", cover:"", ad:''};
         $scope.submit = function(){
           Dao.save({}, $scope.obj, function(res){
             if (res.result === 'success'){
@@ -124,6 +155,21 @@ angular.module('myApp.controllers', [])
             editor.addListener('contentChange', function() {
               $scope.$apply(function () {
                 $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
+        if (adeditor){
+          UE.getEditor('adeditor').destroy();
+        }
+        adeditor = UE.getEditor('adeditor');
+        if (adeditor){
+          adeditor.addListener( 'ready', function() {
+            adeditor.setContent($scope.obj.ad, true);
+            adeditor.focus();
+            adeditor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.ad = adeditor.getContent();
               });
             });
           });
@@ -152,6 +198,21 @@ angular.module('myApp.controllers', [])
               editor.addListener('contentChange', function() {
                 $scope.$apply(function () {
                   $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
+          if (adeditor){
+            UE.getEditor('adeditor').destroy();
+          }
+          adeditor = UE.getEditor('adeditor');
+          if (editor){
+            adeditor.addListener( 'ready', function() {
+              adeditor.setContent($scope.obj.ad, true);
+              adeditor.focus();
+              adeditor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.ad = adeditor.getContent();
                 });
               });
             });
@@ -189,7 +250,7 @@ angular.module('myApp.controllers', [])
     if ($routeParams.id) {
       if ($routeParams.id === "new"){
         // 创建
-        $scope.obj = {title:"", detail:"", abstract:"", cover:""};
+        $scope.obj = {title:"", detail:"", abstract:"", cover:"", ad:''};
         $scope.submit = function(){
           Hao.save({}, $scope.obj, function(res){
             if (res.result === 'success'){
@@ -210,6 +271,21 @@ angular.module('myApp.controllers', [])
             editor.addListener('contentChange', function() {
               $scope.$apply(function () {
                 $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
+        if (adeditor){
+          UE.getEditor('adeditor').destroy();
+        }
+        adeditor = UE.getEditor('adeditor');
+        if (adeditor){
+          adeditor.addListener( 'ready', function() {
+            adeditor.setContent($scope.obj.ad, true);
+            adeditor.focus();
+            adeditor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.ad = adeditor.getContent();
               });
             });
           });
@@ -238,6 +314,21 @@ angular.module('myApp.controllers', [])
               editor.addListener('contentChange', function() {
                 $scope.$apply(function () {
                   $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
+          if (adeditor){
+            UE.getEditor('adeditor').destroy();
+          }
+          adeditor = UE.getEditor('adeditor');
+          if (adeditor){
+            adeditor.addListener( 'ready', function() {
+              adeditor.setContent($scope.obj.ad, true);
+              adeditor.focus();
+              adeditor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.ad = adeditor.getContent();
                 });
               });
             });
@@ -275,7 +366,7 @@ angular.module('myApp.controllers', [])
     if ($routeParams.id) {
       if ($routeParams.id === "new"){
         // 创建
-        $scope.obj = {title:"", detail:"", abstract:"", cover:""};
+        $scope.obj = {title:"", detail:"", abstract:"", cover:"", ad:''};
         $scope.submit = function(){
           Day.save({}, $scope.obj, function(res){
             if (res.result === 'success'){
@@ -296,6 +387,21 @@ angular.module('myApp.controllers', [])
             editor.addListener('contentChange', function() {
               $scope.$apply(function () {
                 $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
+        if (adeditor){
+          UE.getEditor('adeditor').destroy();
+        }
+        adeditor = UE.getEditor('adeditor');
+        if (adeditor){
+          adeditor.addListener( 'ready', function() {
+            adeditor.setContent($scope.obj.ad, true);
+            adeditor.focus();
+            adeditor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.ad = adeditor.getContent();
               });
             });
           });
@@ -324,6 +430,21 @@ angular.module('myApp.controllers', [])
               editor.addListener('contentChange', function() {
                 $scope.$apply(function () {
                   $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
+          if (adeditor){
+            UE.getEditor('adeditor').destroy();
+          }
+          adeditor = UE.getEditor('adeditor');
+          if (adeditor){
+            adeditor.addListener( 'ready', function() {
+              adeditor.setContent($scope.obj.ad, true);
+              adeditor.focus();
+              adeditor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.ad = adeditor.getContent();
                 });
               });
             });
@@ -361,7 +482,7 @@ angular.module('myApp.controllers', [])
     if ($routeParams.id) {
       if ($routeParams.id === "new"){
         // 创建
-        $scope.obj = {title:"", detail:"", abstract:"", cover:""};
+        $scope.obj = {title:"", detail:"", abstract:"", cover:"", ad:''};
         $scope.submit = function(){
           Zhao.save({}, $scope.obj, function(res){
             if (res.result === 'success'){
@@ -382,6 +503,21 @@ angular.module('myApp.controllers', [])
             editor.addListener('contentChange', function() {
               $scope.$apply(function () {
                 $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
+        if (adeditor){
+          UE.getEditor('adeditor').destroy();
+        }
+        adeditor = UE.getEditor('adeditor');
+        if (adeditor){
+          adeditor.addListener( 'ready', function() {
+            adeditor.setContent($scope.obj.ad, true);
+            adeditor.focus();
+            adeditor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.ad = adeditor.getContent();
               });
             });
           });
@@ -410,6 +546,21 @@ angular.module('myApp.controllers', [])
               editor.addListener('contentChange', function() {
                 $scope.$apply(function () {
                   $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
+          if (adeditor){
+            UE.getEditor('adeditor').destroy();
+          }
+          adeditor = UE.getEditor('adeditor');
+          if (adeditor){
+            adeditor.addListener( 'ready', function() {
+              adeditor.setContent($scope.obj.ad, true);
+              adeditor.focus();
+              adeditor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.ad = adeditor.getContent();
                 });
               });
             });
@@ -447,7 +598,7 @@ angular.module('myApp.controllers', [])
     if ($routeParams.id) {
       if ($routeParams.id === "new"){
         // 创建
-        $scope.obj = {title:"", detail:"", abstract:"", cover:""};
+        $scope.obj = {title:"", detail:"", abstract:"", cover:"", ad:''};
         $scope.submit = function(){
           Qiu.save({}, $scope.obj, function(res){
             if (res.result === 'success'){
@@ -468,6 +619,21 @@ angular.module('myApp.controllers', [])
             editor.addListener('contentChange', function() {
               $scope.$apply(function () {
                 $scope.obj.detail = editor.getContent();
+              });
+            });
+          });
+        }
+        if (adeditor){
+          UE.getEditor('adeditor').destroy();
+        }
+        adeditor = UE.getEditor('adeditor');
+        if (adeditor){
+          adeditor.addListener( 'ready', function() {
+            adeditor.setContent($scope.obj.ad, true);
+            adeditor.focus();
+            adeditor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.ad = adeditor.getContent();
               });
             });
           });
@@ -496,6 +662,21 @@ angular.module('myApp.controllers', [])
               editor.addListener('contentChange', function() {
                 $scope.$apply(function () {
                   $scope.obj.detail = editor.getContent();
+                });
+              });
+            });
+          }
+          if (adeditor){
+            UE.getEditor('adeditor').destroy();
+          }
+          adeditor = UE.getEditor('adeditor');
+          if (adeditor){
+            adeditor.addListener( 'ready', function() {
+              adeditor.setContent($scope.obj.ad, true);
+              adeditor.focus();
+              adeditor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.ad = adeditor.getContent();
                 });
               });
             });
@@ -533,7 +714,7 @@ angular.module('myApp.controllers', [])
     if ($routeParams.id) {
       if ($routeParams.id === "new"){
         // 创建新的活动
-        $scope.activity = {title:"", entitle:"", detail:"", adr:"", enadr:"", cover: "", startAt: "", endAt: ""};
+        $scope.activity = {title:"", detail:"", adr:"", cover: "", startAt: "", ad: ""};
         $scope.submit = function(){
           Activity.save({}, $scope.activity, function(res){
             if (res.result === 'success'){
@@ -554,6 +735,21 @@ angular.module('myApp.controllers', [])
             acteditor.addListener('contentChange', function() {
               $scope.$apply(function () {
                 $scope.activity.detail = acteditor.getContent();
+              });
+            });
+          });
+        }
+        if (adeditor){
+          UE.getEditor('adeditor').destroy();
+        }
+        adeditor = UE.getEditor('adeditor');
+        if (adeditor){
+          adeditor.addListener( 'ready', function() {
+            adeditor.setContent($scope.obj.ad, true);
+            adeditor.focus();
+            adeditor.addListener('contentChange', function() {
+              $scope.$apply(function () {
+                $scope.obj.ad = adeditor.getContent();
               });
             });
           });
@@ -582,6 +778,21 @@ angular.module('myApp.controllers', [])
               acteditor.addListener('contentChange', function() {
                 $scope.$apply(function () {
                   $scope.activity.detail = acteditor.getContent();
+                });
+              });
+            });
+          }
+          if (adeditor){
+            UE.getEditor('adeditor').destroy();
+          }
+          adeditor = UE.getEditor('adeditor');
+          if (adeditor){
+            adeditor.addListener( 'ready', function() {
+              adeditor.setContent($scope.obj.ad, true);
+              adeditor.focus();
+              adeditor.addListener('contentChange', function() {
+                $scope.$apply(function () {
+                  $scope.obj.ad = adeditor.getContent();
                 });
               });
             });

@@ -32,11 +32,12 @@
       </thead>
       <tbody>
         <tr ng-repeat="day in days">
-          <td>{{$index + 1}}</td>
-          <td>{{day.title}}</td>
-          <td>{{day.time | date:"yyyy-MM-dd HH:mm"}}</td>
-          <td>{{day.abstract | truncate}}</td>
-          <td>
+          <td class='center'>{{$index + 1}}</td>
+          <td class='center'>{{day.title}}</td>
+          <td class='center'>{{day.time | date:"yyyy-MM-dd HH:mm"}}</td>
+          <td class='center'>{{day.abstract | truncate}}</td>
+          <td><img src="{{day.cover}}" alt=""></td>
+          <td class='center-actions'>
             <a href="#/days/{{day.id}}" class="btn btn-warning btn-xs">
               <span class="glyphicon glyphicon-edit"></span>编辑
             </a>

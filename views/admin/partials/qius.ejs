@@ -32,11 +32,12 @@
       </thead>
       <tbody>
         <tr ng-repeat="qiu in qius">
-          <td>{{$index + 1}}</td>
-          <td>{{qiu.title}}</td>
-          <td>{{qiu.time | date:"yyyy-MM-dd HH:mm"}}</td>
-          <td>{{qiu.abstract | truncate}}</td>
-          <td>
+          <td class='center'>{{$index + 1}}</td>
+          <td class='center'>{{qiu.title}}</td>
+          <td class='center'>{{qiu.time | date:"yyyy-MM-dd HH:mm"}}</td>
+          <td class='center'>{{qiu.abstract | truncate}}</td>
+          <td><img src="{{qiu.cover}}" alt=""></td>
+          <td class='center-actions'>
             <a href="#/qius/{{qiu.id}}" class="btn btn-warning btn-xs">
               <span class="glyphicon glyphicon-edit"></span>编辑
             </a>

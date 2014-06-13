@@ -483,7 +483,7 @@ module.exports = function(app){
       res.render('wechat/activity');
       return;
     }
-    db.select(['activity.id','activity.entitle','activity.startAt', 'activity.cover'])
+    db.select(['activity.id','activity.title','activity.startAt', 'activity.cover', 'activity.adr'])
       .order_by('id desc')
       .limit(10,10* parseInt(req.query.page))
       .get('activity',function(err,rows,fields){
@@ -510,11 +510,7 @@ module.exports = function(app){
           if(rows.length !== 1){
               return;
           }
-          if (rows[0].startAt.Format('yyyy-M-d') == rows[0].endAt.Format('yyyy-M-d')){
-            rows[0].time = rows[0].startAt.Format('yyyy.M.d hh:mm') + " - " + rows[0].endAt.Format('hh:mm');
-          } else {
-            rows[0].time = rows[0].startAt.Format('yyyy.M.d hh:mm') + " - " +  rows[0].endAt.Format('yyyy.M.d hh:mm');
-          }
+          rows[0].time = rows[0].startAt.Format('yyyy.M.d hh:mm');
           res.render('wechat/activityDetail',{obj:rows[0]});
       })
   })
@@ -893,12 +889,12 @@ module.exports = function(app){
       if(err){
         console.log(err);
       }else{
+        console.log("activities:", activitys[0]);
         res.send(activitys[0]);
       }
     })
   });
   app.post('/admin/activities', function(req, res){
-    console.log("activitys create:", req.body.detail);
     var activity = {
       title   : req.body.title,
       cover   : req.body.cover,
@@ -971,7 +967,6 @@ module.exports = function(app){
   });
   app.post('/admin/zhao', function(req, res){
     console.log("zhao create");
-    console.log(req.body.detail);
     var zhao = {
       title:req.body.title,
       cover:req.body.cover,

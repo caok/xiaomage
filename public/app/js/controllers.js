@@ -745,11 +745,11 @@ angular.module('myApp.controllers', [])
         adeditor = UE.getEditor('adeditor');
         if (adeditor){
           adeditor.addListener( 'ready', function() {
-            adeditor.setContent($scope.obj.ad, true);
+            adeditor.setContent($scope.activity.ad, true);
             adeditor.focus();
             adeditor.addListener('contentChange', function() {
               $scope.$apply(function () {
-                $scope.obj.ad = adeditor.getContent();
+                $scope.activity.ad = adeditor.getContent();
               });
             });
           });
@@ -788,11 +788,11 @@ angular.module('myApp.controllers', [])
           adeditor = UE.getEditor('adeditor');
           if (adeditor){
             adeditor.addListener( 'ready', function() {
-              adeditor.setContent($scope.obj.ad, true);
+              adeditor.setContent($scope.activity.ad, true);
               adeditor.focus();
               adeditor.addListener('contentChange', function() {
                 $scope.$apply(function () {
-                  $scope.obj.ad = adeditor.getContent();
+                  $scope.activity.ad = adeditor.getContent();
                 });
               });
             });

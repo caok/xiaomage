@@ -528,6 +528,9 @@ module.exports = function(app){
     if(req.params.new === 'true'){
       if(req.session.admin)
         delete req.session.admin;
+        res.clearCookie('admin');
+        delete req.session.superuser;
+        res.clearCookie('superuser');
     }
     if(req.session.admin)
       return res.redirect('/admin');
@@ -555,6 +558,9 @@ module.exports = function(app){
           var pwdstr = md5sum.digest('hex');
         if (admins[0].password === pwdstr){
           req.session.admin = admins[0].name;
+          res.cookie('admin', admins[0].name, {expires: new Date(Date.now() + 60 * 60 * 1000 * 24 * 7)});
+          req.session.superuser = admins[0].superuser;
+          res.cookie('superuser', admins[0].superuser, {expires: new Date(Date.now() + 60 * 60 * 1000 * 24 * 7)});
           return res.redirect('/admin');
         } else {
           res.render('admin/login', {alert: "密码错误"});
@@ -566,6 +572,9 @@ module.exports = function(app){
   app.get('/admin/logout', function(req, res){
     if(req.session.admin)
       delete req.session.admin;
+      res.clearCookie('admin');
+      delete req.session.superuser;
+      res.clearCookie('superuser');
     return res.redirect('/admin/login');
   });
 
@@ -1017,7 +1026,6 @@ module.exports = function(app){
 
   // 求之若渴
   app.get('/admin/qiu', function(req, res){
-    console.log("qiu index");
     db.select('id, title, time, abstract, cover')
       .order_by('id desc')
       .get('qiu',function(err, qiu, fields){
@@ -1092,13 +1100,23 @@ module.exports = function(app){
   // ------------------ 管理员管理 ----------------
   app.get('/admin/setting', function (req, res, next) {
     console.log("admin list");
-    db.get('admin', function(err, admins, fields){
-      if(err){
-        console.log(err);
-      }else{
-        res.send(admins);
-      }
-    });
+    if (req.session.admin && req.session.superuser == 1){
+      db.get('admin', function(err, admins, fields){
+        if(err){
+          console.log(err);
+        }else{
+          res.send(admins);
+        }
+      });
+    } else {
+      db.where({name: req.session.admin}).get('admin', function(err, admins, fields){
+        if(err){
+          console.log(err);
+        }else{
+          res.send(admins);
+        }
+      });
+    }
   });
 
   app.get('/admin/setting/:id', function (req, res, next) {

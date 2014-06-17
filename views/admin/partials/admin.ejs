@@ -16,9 +16,11 @@
 
 <div class="row-fluid">
   <div class="pull-right">
-    <a href="#/setting/new" class="btn btn-primary btn-sm">
-      <span class="glyphicon glyphicon-plus">新建</span>
-    </a>
+    <% if(superuser && superuser == 1) { %>
+      <a href="#/setting/new" class="btn btn-primary btn-sm">
+        <span class="glyphicon glyphicon-plus">新建</span>
+      </a>
+    <% } %>
   </div>
   <table class="table">
     <thead>
@@ -38,9 +40,11 @@
           <a href="#/setting/{{admin.id}}" class="btn btn-primary btn-xs">
             <span class="glyphicon glyphicon-edit"></span>编辑
           </a>
-          <a href="javascript:void(0)" ng-click="rmAdmin(admin.id)" class="btn btn-danger btn-xs">
-            <span class="glyphicon glyphicon-remove"></span>删除
-          </a>
+          <% if(superuser && superuser == 1) { %>
+            <a href="javascript:void(0)" ng-click="rmAdmin(admin.id)" class="btn btn-danger btn-xs">
+              <span class="glyphicon glyphicon-remove"></span>删除
+            </a>
+          <% } %>
         </td>
       </tr>
     </tbody>

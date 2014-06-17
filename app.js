@@ -11,6 +11,7 @@ var path = require('path');
 var wechat = require('./routes/wechat');
 var config = require('./config');
 var multer = require('multer');
+var auth = require('./auth');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(express.methodOverride());
 app.use(multer({ dest: './public/upload/'}));
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
+app.use(auth.auth_user);
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -184,8 +184,13 @@ body {
 }
 
 #notice .info {
-  font-size: 1.2em;
-  line-height: 1.4em;
+  font-size: 1em;
+  line-height: 1.6em;
+  letter-spacing:1px;
+  color: #303030;
+}
+#notice .info p{
+  line-height: 1.6em;
 }
 
 .info img {

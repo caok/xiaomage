@@ -37,7 +37,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-
 app.use(express.query()); // Or app.use(express.query());
 wechat(app);
 

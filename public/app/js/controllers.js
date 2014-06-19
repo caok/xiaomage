@@ -879,7 +879,7 @@ angular.module('myApp.controllers', [])
 
       Admin.remove({id: adminId});
       for (var i=0; i<admins.length; i++){
-        if (admins[i]._id == adminId){
+        if (admins[i].id == adminId){
           $scope.admins.splice(i, 1);
         }
       };

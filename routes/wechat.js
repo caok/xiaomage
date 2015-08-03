@@ -1,7 +1,3 @@
-/**
- * Created by Richard on 2014/5/31.
- */
-
 var wechat = require('wechat');
 var config = require('../config');
 module.exports = function(app){

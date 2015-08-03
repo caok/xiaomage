@@ -1,7 +1,3 @@
-/**
- * Created by Richard on 2014/5/31.
- */
-
 var config = {
     databaseConfig:{
         database:'xiaomage',
@@ -10,12 +6,12 @@ var config = {
         server:'localhost'
     },
     wechat:{
-        accessToken:'11235813',
+        accessToken:'secret_token',
         url:'http://wechat.martz.cn',
-        AppId:'wx8e9801bd8d702d7e',
-        AppSecret:'9219df7022fcd183dae5b4130d55bc09'
+        AppId:'secret_appid',
+        AppSecret:'secret_appsecret'
     },
-    port:9002
+    port:9000
 };
 
 module.exports = config;
